@@ -7,6 +7,10 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
+```
+
 # Introduction
 This script allows you to load single-cell imaging mass cytometry data created by [ImcSegmentationPipeline](github.com/BodenmillerGroup/ImcSegmentationPipeline). 
 We recommend to work on the R Project stored in this github repo to make sure that the working directory is set correctly.
