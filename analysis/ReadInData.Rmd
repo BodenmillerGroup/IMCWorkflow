@@ -7,44 +7,86 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r}
+# Introduction
+This script allows you to load single-cell imaging mass cytometry data created by [ImcSegmentationPipeline](github.com/BodenmillerGroup/ImcSegmentationPipeline). 
+We recommend to work on the R Project stored in this github repo to make sure that the working directory is set correctly.
+
+# Load libraries
+```{r, message=FALSE}
 library(SingleCellExperiment)
 ```
 
+# Load single-cell, image, relationship and meta data
 ```{r}
-cells.mat <- read.csv("data/extdata/cells.csv", stringsAsFactors = FALSE)
-image.mat <- read.csv("data/extdata/image.csv", stringsAsFactors = FALSE)
-relationships.mat <- read.delim("data/extdata/Object_relationships.txt", stringsAsFactors = FALSE)
-panel.mat <- read.csv("data/extdata/panel.csv", stringsAsFactors = FALSE)
+# load data 
+cells.mat <- read.csv(file = "data/extdata/cells.csv", stringsAsFactors = FALSE)
+image.mat <- read.csv(file = "data/extdata/image.csv", stringsAsFactors = FALSE)
+relationships.mat <- read.delim(file = "data/extdata/Object_relationships.txt", stringsAsFactors = FALSE)
+panel.mat <- read.csv(file = "data/extdata/panel.csv", stringsAsFactors = FALSE)
 
-
+# extract information from the "cells.mat" object
 image_number <- cells.mat$ImageNumber # check if this exists
 cell_number <- cells.mat$ObjectNumber # check if this exists
-cur_cells <- cells.mat[,grepl("Intensity_MeanIntensity_", colnames(cells.mat))]
-other_features <- cells.mat[,!grepl("Intensity_MeanIntensity_", colnames(cells.mat)) & 
-                                !colnames(cells.mat) %in% c("ImageNumber", "ObjectNumber")]
-  
+```
 
+# What single-cell variables should be included in the SingleCellExperiment (SCE) object?
+[ImcSegmentationPipeline](github.com/BodenmillerGroup/ImcSegmentationPipeline) will measure multiple variables for every object. 
+This measurment can also be done on different stacks (e.g. `FullStack`, `FullStackFiltered`, `ProbabStack` etc.). 
+A measured single-cell variable is for example the mean intensity per channel. 
+Other potential variables are median, maximum, integrated counts etc. 
+It is now important to define which variables from which stack should be included in your SCE Object in order to keep your object small and your analyis efficient. 
+Create a own object for each measure variable (e.g. `cells.meanintensity`, `cells.meanintensity.corrected`). 
+If you want to know what variables are available, use the following command: `colnames(cells.mat)`. 
+
+# Create objects for the measured variables/stacks
+```{r}
+# create an object for each measured variable and for the unique stacks
+cells.meanintensity <- cells.mat[,grepl("Intensity_MeanIntensity_FullStackFiltered_", colnames(cells.mat))]
+cells.meanintensity.corrected <- cells.mat[,grepl("Intensity_MeanIntensityCorrected_FullStackFiltered_", colnames(cells.mat))]
+
+# scale the count data with the scaling factor stored in image.met
+cells.meanintensity = cells.meanintensity * image.mat[, "Scaling_FullStackFiltered"][1]
+cells.meanintensity.corrected = cells.meanintensity.corrected * image.mat[, "Scaling_FullStackFiltered"][1]
+
+# channels stored in the "panel.mat" and in the "cells.X" object
 panel.channels <- paste0("c", 1:nrow(panel.mat))
-cells.channels <- gsub(".*_", "", colnames(cur_cells))
-    
-cur_cells <- cur_cells[,match(panel.channels, cells.channels)]
-  # Build the SingleCellExperiment object
-sce <- SingleCellExperiment::SingleCellExperiment(assays = list(counts=t(cur_cells)))
+cells.channels <- gsub(".*_", "", colnames(cells.meanintensity))
+
+# match channels from the panel and the channels from the measured variable
+cells.meanintensity <- cells.meanintensity[,match(panel.channels, cells.channels)]
+cells.meanintensity.corrected <- cells.meanintensity.corrected[,match(panel.channels, cells.channels)]
+```
+
+# Create a `SingleCellExperiment` object
+Now it's time to create your `SCE` object which combines all the different facets of your data.
+For each measured variable, there will be a separate `assay` in the object. 
+
+# SCE object
+```{r, eval=FALSE}
+# Build the SingleCellExperiment object with the different measuretypes (= assays)
+sce <- SingleCellExperiment::SingleCellExperiment(assays = list(
+  meanintensity=t(cells.meanintensity),
+  meanintensity_corrected=t(cells.meanintensity.corrected)))
   
-  # Build the row metadata
-  row.data <- DataFrame(row.names = colnames(cur_cells),
+# Build the row metadata
+row.data <- DataFrame(row.names = colnames(cells.meanintensity),
                         panel.mat)
   
-  # Build the column metadata
-  col.data <- DataFrame(row.names = rownames(cur_cells),
-                        image_number = image_number,
-                        cell_number = cell_number,
-                        other_features)
+# Build the column metadata
+col.data <- DataFrame(row.names = rownames(cells.meanintensity),
+                      image_number = image_number,
+                      cell_number = cell_number)
   
-  # Add these metadata to SCE object
-  colData(sce) <- col.data
-  rowData(sce) <- row.data  
+# Add these metadata to SCE object
+colData(sce) <- col.data
+rowData(sce) <- row.data
 
-saveRDS(sce, "data/extdata/sce.rds")
+# Add object relationship to SCE
+# ideas: colData with a SimpleList (S4 vector) containing ObjectNumbers indicating neighbours (see example)
+test = DataFrame(c(1,2,3), SimpleList(c(2,3), c(2), NULL))
+colnames(test) = c("id", "neighbour")
+test 
+
+# Save the SingleCellExperiment object which serves as basis for any further analysis
+#saveRDS(sce, "data/extdata/SingleCellExperiment.rds")
 ```
