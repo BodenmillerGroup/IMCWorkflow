@@ -1,0 +1,66 @@
+---
+title: "Spatial analysis for IMC data"
+output:
+  workflowr::wflow_html:
+    toc: true
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+Data obtained by imaging mass cytometry allows the identification of cell-cell interactions and spatial tissue structure.
+Here, we will highlight the different strategies for spatial data analysis including:
+
+1. community detection 
+2. low-level visualization strategies
+3. statistical neighbourhood analysis
+4. Computing the distance between objects
+5. further spatial statistics (e.g. Ripley's K)
+
+First, we will read in all needed libraries and the ```SingleCellExperiment``` object generated in the previous step.
+
+```{r}
+library(SingleCellExperiment)
+sce <- readRDS("data/extdata/sce.rds")
+```
+
+# Community detection
+
+In the first instance, we will perform spatial clustering to detect spatial communities.
+This can simply be done by calling the ```spatialCluster``` function.
+
+```{r}
+sce <- spatialCluster(sce, method = "leiden")
+```
+
+This function will create a ```spatial_community``` entry in the ```colData(sce)``` slot to store the spatial community labels.
+
+# Visualization of cell-cell networks
+
+The ```SingleCellExperiment``` object contains a SimpleList entry (see ReadInData Workflow) that stores the cell IDs of the direct neighbourhood for each cell.
+Based on this entry, a wrapper function can create an igraph object.
+**Alternatively: a plotGraph function constructs a graph and uses the igraph plot functionality internally.**
+This object can be used for simple visualization of the networks.
+
+```{r spatial-visualization}
+cur_graph <- makeGraph(sce)
+
+plotGraph(sce, colour_by = "cluster")
+plotGraph(sce, colour_by = "spatial_community")
+```
+
+**Here, we will also include more complex spatial visualization tools to create figures similar to Jana's and Hart's paper.**
+
+# Neighbourhood analysis
+
+In the next step, we can perform statistical neighbourhood analysis.
+
+```{r}
+neighbourhood_out <- neighbourhood(sce, clusters = colData(sce)$cell_type)
+```
+
+The function returns the statistics that can be used for visualization.
+
