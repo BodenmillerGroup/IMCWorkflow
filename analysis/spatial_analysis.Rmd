@@ -1,0 +1,20 @@
+---
+title: "Spatial analysis for IMC data"
+output:
+  workflowr::wflow_html:
+    toc: true
+editor_options:
+  chunk_output_type: console
+---
+
+Data obtained by imaging mass cytometry allows the identification of cell-cell interactions and spatial tissue structure.
+Here, we will highlight the different strategies for spatial data analysis including:
+
+1. low-level visualization strategies
+2. statistical neighbourhood analysis
+3. 
+
+```{r}
+library(SingleCellExperiment)
+```
+
