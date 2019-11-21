@@ -7,14 +7,24 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
 Data obtained by imaging mass cytometry allows the identification of cell-cell interactions and spatial tissue structure.
 Here, we will highlight the different strategies for spatial data analysis including:
 
 1. low-level visualization strategies
 2. statistical neighbourhood analysis
-3. 
+3. Computing the distance between objects
+4. further spatial statistics (e.g. Ripley's K)
+
+First, we will read in all needed libraries and the ```SingleCellExperiment``` object generated in the previous step.
 
 ```{r}
 library(SingleCellExperiment)
+sce <- readRDS("data/extdata/sce.rds")
 ```
+
+
 
