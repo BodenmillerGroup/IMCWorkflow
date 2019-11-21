@@ -7,44 +7,120 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r}
+# Introduction
+This script allows you to load single-cell imaging mass cytometry data created by [ImcSegmentationPipeline](github.com/BodenmillerGroup/ImcSegmentationPipeline). 
+We recommend to work on the R Project stored in this github repo to make sure that the working directory is set correctly.
+
+# Load libraries
+```{r, message=FALSE}
 library(SingleCellExperiment)
 ```
 
+# Load single-cell, image, relationship and meta data
 ```{r}
-cells.mat <- read.csv("data/extdata/cells.csv", stringsAsFactors = FALSE)
-image.mat <- read.csv("data/extdata/image.csv", stringsAsFactors = FALSE)
-relationships.mat <- read.delim("data/extdata/Object_relationships.txt", stringsAsFactors = FALSE)
-panel.mat <- read.csv("data/extdata/panel.csv", stringsAsFactors = FALSE)
+# load data 
+cells.mat <- read.csv(file = "data/extdata/cells.csv", stringsAsFactors = FALSE)
+image.mat <- read.csv(file = "data/extdata/image.csv", stringsAsFactors = FALSE)
+relationships.mat <- read.delim(file = "data/extdata/Object_relationships.txt", stringsAsFactors = FALSE)
+panel.mat <- read.csv(file = "data/extdata/panel.csv", stringsAsFactors = FALSE)
 
-
+# extract information from the "cells.mat" object
 image_number <- cells.mat$ImageNumber # check if this exists
 cell_number <- cells.mat$ObjectNumber # check if this exists
-cur_cells <- cells.mat[,grepl("Intensity_MeanIntensity_", colnames(cells.mat))]
-other_features <- cells.mat[,!grepl("Intensity_MeanIntensity_", colnames(cells.mat)) & 
-                                !colnames(cells.mat) %in% c("ImageNumber", "ObjectNumber")]
-  
+```
 
+# What single-cell variables should be included in the SingleCellExperiment (SCE) object?
+[ImcSegmentationPipeline](github.com/BodenmillerGroup/ImcSegmentationPipeline) will measure multiple variables for every object. 
+This measurment can also be done on different stacks (e.g. `FullStack`, `FullStackFiltered`, `ProbabStack` etc.). 
+A measured single-cell variable is for example the mean intensity per channel. 
+Other potential variables are median, maximum, integrated counts etc. 
+It is now important to define which variables from which stack should be included in your SCE Object in order to keep your object small and your analyis efficient. 
+Create a own object for each measure variable (e.g. `cells.meanintensity`, `cells.meanintensity.corrected`). 
+If you want to know what variables are available, use the following command: 
+```{r} 
+# return unique measure variables/stacks without channels
+# sub(...)
+colnames(cells.mat)
+```
+ 
+```{r, eval=FALSE}
+# create an object for each measured variable and for the unique stacks
+cells.meanintensity <- cells.mat[,grepl("Intensity_MeanIntensity_FullStackFiltered_", colnames(cells.mat))]
+cells.meanintensity.corrected <- cells.mat[,grepl("Intensity_MeanIntensityCorrected_FullStackFiltered_", colnames(cells.mat))]
+
+# scale the count data with the scaling factor stored in image.met
+cells.meanintensity = cells.meanintensity * image.mat[, "Scaling_FullStackFiltered"][1]
+cells.meanintensity.corrected = cells.meanintensity.corrected * image.mat[, "Scaling_FullStackFiltered"][1]
+
+# channels stored in the "panel.mat" and in the "cells.X" object
 panel.channels <- paste0("c", 1:nrow(panel.mat))
-cells.channels <- gsub(".*_", "", colnames(cur_cells))
-    
-cur_cells <- cur_cells[,match(panel.channels, cells.channels)]
-  # Build the SingleCellExperiment object
-sce <- SingleCellExperiment::SingleCellExperiment(assays = list(counts=t(cur_cells)))
+cells.channels <- gsub(".*_", "", colnames(cells.meanintensity))
+
+# match channels from the panel and the channels from the measured variable
+cells.meanintensity <- cells.meanintensity[,match(panel.channels, cells.channels)]
+cells.meanintensity.corrected <- cells.meanintensity.corrected[,match(panel.channels, cells.channels)]
+```
+
+# Create a `SingleCellExperiment` object
+Now it's time to create your `SCE` object which combines all the different facets of your data.
+For each measured variable, there will be a separate `assay` in the object. 
+
+```{r, eval=FALSE}
+# Build the SingleCellExperiment object with the different measuretypes (= assays)
+sce <- SingleCellExperiment::SingleCellExperiment(assays = list(
+  meanintensity=t(cells.meanintensity),
+  meanintensity_corrected=t(cells.meanintensity.corrected)))
   
-  # Build the row metadata
-  row.data <- DataFrame(row.names = colnames(cur_cells),
+# Build the row metadata
+row.data <- DataFrame(row.names = colnames(cells.meanintensity),
                         panel.mat)
   
-  # Build the column metadata
-  col.data <- DataFrame(row.names = rownames(cur_cells),
-                        image_number = image_number,
-                        cell_number = cell_number,
-                        other_features)
+# Build the column metadata
+col.data <- DataFrame(row.names = rownames(cells.meanintensity),
+                      image_number = image_number,
+                      cell_number = cell_number)
   
-  # Add these metadata to SCE object
-  colData(sce) <- col.data
-  rowData(sce) <- row.data  
-
-saveRDS(sce, "data/extdata/sce.rds")
+# Add these metadata to SCE object
+colData(sce) <- col.data
+rowData(sce) <- row.data
 ```
+
+# Add object relationship to the SCE object
+[ImcSegmentationPipeline](github.com/BodenmillerGroup/ImcSegmentationPipeline) will furthermore create a file containing relationship information for all the single-cells (neighbours of single-cells). 
+We also want this information to be part of our `SingleCellExperiment` object. 
+This kind of information can be stored in the `ColDat` of the object. 
+Each row represents a cell, each column will contain information for this cell. 
+One column is the neighbourhood information, containing IDs of neighbouring cells. 
+
+```{r, eval=FALSE}
+#Convert to wide format
+relationships.mat = as.data.table(relationships.mat)
+relationships.mat <- relationships.mat[, id := paste(.BY,collapse =  "_"), by=.(First.Image.Number,First.Object.Number)]
+setkey(relationships.mat ,id)
+relationships.mat[, myorder := 1:.N, by = .(id)]
+rel_dat_wide = dcast.data.table(relationships.mat,formula = 'First.Image.Number + First.Object.Number ~ myorder', value.var = 'Second.Object.Number')
+
+#Convert to simple list
+neighb_lists <- split(rel_dat_wide[,3:ncol(rel_dat_wide)], seq(nrow(rel_dat_wide)))
+neighb_lists = lapply(neighb_lists, function(x) unlist(x)[!is.na(x)])
+neighb_frame = DataFrame(rel_dat_wide[,1:2],SimpleList(neighb_lists))
+
+# To make sure the order corresponds 
+experiment_order = colData(sce)
+colnames(experiment_order) = c("First.Image.Number","First.Object.Number")
+neighb_frame = neighb_frame[order(match(neighb_frame[,c("First.Image.Number","First.Object.Number")],experiment_order)),]
+
+# add relationship information to SCE object
+colData(sce) = DataFrame(colData(sce),neighb_frame)
+```
+
+# Save `SingleCellExperiment` Object
+```{r, eval=FALSE}
+saveRDS(sce, "data/extdata/SingleCellExperiment.rds")
+```
+
+# SessionInfo
+```{r}
+sessionInfo()
+```
+
