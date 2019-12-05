@@ -5,8 +5,14 @@ navbar:
   left:
   - text: Home
     href: index.html
-  - text: About
-    href: about.html
+  - text: Overview
+    href: overview.html
+  - text: Read in data
+    href: 01_readData.html
+  - text: Quality control
+    href: 02_qualityControl.html
+  - text: Spatial analysis
+    href: 04_spatialAnalysis.html
   - text: License
     href: license.html
 output:
