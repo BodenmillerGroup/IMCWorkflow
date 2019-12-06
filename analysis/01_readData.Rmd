@@ -11,16 +11,25 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
 ```
 
-# Introduction
-This script allows you to load single-cell imaging mass cytometry data created by [ImcSegmentationPipeline](github.com/BodenmillerGroup/ImcSegmentationPipeline). 
-We recommend to work on the R Project stored in this github repo to make sure that the working directory is set correctly.
+# Data import
 
-# Load libraries
-```{r, message=FALSE}
-library(SingleCellExperiment)
-```
+Raw image files in .mcd format are processed using the [IMC Segementation Pipeline](https://github.com/BodenmillerGroup/ImcSegmentationPipeline).
+The pipeline creates a number of folders that contain relevant files for image and single-cell data analysis.
+For single-cell IMC data analysis, the cell-level intensity values per marker need to be linked to (i) cell- and image-specific metadata, (ii) marker-specific metadata and (iii) neighbourhood information.
+These data are commonly stored in following files:
+
+* __cells.csv__ (or similar): contains the cell-level information of a multitude of features. While the majority of these features should be regarded as cell-level metadata (e.g. shape and position), usually the _MeanIntensity_ and __MeanIntensityCorrected__ columns contain the raw and spill-over-corrected counts per cell and per channel.
+* __Image.csv__: contains image-level metadata. These include the image name, number of detected cells, and most importantly the scaling factor, with which the counts need to be multiplied to account for the image encoding (e.g. 16-bit images: scaling factor = 2^{16}-1 = 65535).
+* __Object Relationships.csv__: contains a table of relationships between neighbouring cells.
+* __Panel.csv__: to associate the channel names with the metal-labelled antibodies, the user needs to specify a file that conatins the link between (i) antibody, (ii) metal-tag and (iii) channel name. 
+
+__TODO: more information on how to generate these files using CellProfiler.__ 
+
+The files __cells.csv__, __Image.csv__ and __Object relationships.csv__ can be found in the __cpout__ folder created by the __IMC Segmentation Pipeline__.
+However, the location of the __Panel.csv__ file is not controlled and needs to specified by the user.
 
 # Load single-cell, image, relationship and meta data
+
 ```{r}
 # load data 
 cells.mat <- read.csv(file = "data/extdata/cells.csv", stringsAsFactors = FALSE)
@@ -69,7 +78,8 @@ cells.meanintensity.corrected <- cells.meanintensity.corrected[,match(panel.chan
 Now it's time to create your `SCE` object which combines all the different facets of your data.
 For each measured variable, there will be a separate `assay` in the object. 
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, message=FALSE}
+library(SingleCellExperiment)
 # Build the SingleCellExperiment object with the different measuretypes (= assays)
 sce <- SingleCellExperiment::SingleCellExperiment(assays = list(
   meanintensity=t(cells.meanintensity),
@@ -123,8 +133,5 @@ colData(sce) = DataFrame(colData(sce),neighb_frame)
 saveRDS(sce, "data/extdata/SingleCellExperiment.rds")
 ```
 
-# SessionInfo
-```{r}
-sessionInfo()
-```
+
 
