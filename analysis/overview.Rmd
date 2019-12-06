@@ -14,9 +14,14 @@ __TODO:__ Explain the technology and outline the critical steps in data analysis
 # Introduction
 
 __TODO:__ Introduction to IMC and current ways of analysing the data.
-Here, we want to highlight the challenges in image processing and reference the IMC segmentation pipeline.
+Here, we want to highlight the challenges in image processing and IMC data analysis.
 We should build the link to the CyTOF workflow of the Robinson lab and Giotto as package to analyse spatial transcriptomics data.
 Also mention how IMC data is different to CyTOF data and different from spatial transcriptomics data.
+
+# IMC data pre-processing
+
+Describe the necessary steps in the IMC segementation pipeline.
+We definitely need a good documentation of the IMC segmentation pipeline.
 
 # Outline
 
