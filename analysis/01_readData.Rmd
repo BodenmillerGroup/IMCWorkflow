@@ -1,5 +1,5 @@
 ---
-title: "Read in Data"
+title: "Data import"
 output:
   workflowr::wflow_html:
     toc: true
