@@ -8,7 +8,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
+knitr::opts_chunk$set(echo = TRUE, eval=FALSE, message=FALSE)
 ```
 
 # Data import
@@ -28,19 +28,20 @@ __TODO: more information on how to generate these files using CellProfiler.__
 The files __cells.csv__, __Image.csv__ and __Object relationships.csv__ can be found in the __cpout__ folder created by the __IMC Segmentation Pipeline__.
 However, the location of the __Panel.csv__ file is not controlled and needs to specified by the user.
 
-# Load single-cell, image, relationship and meta data
+```{r read-in-data}
+cells <- read.csv(file = "data/extdata/cells.csv", stringsAsFactors = FALSE)
 
-```{r}
-# load data 
-cells.mat <- read.csv(file = "data/extdata/cells.csv", stringsAsFactors = FALSE)
-image.mat <- read.csv(file = "data/extdata/image.csv", stringsAsFactors = FALSE)
-relationships.mat <- read.delim(file = "data/extdata/Object_relationships.txt", stringsAsFactors = FALSE)
-panel.mat <- read.csv(file = "data/extdata/panel.csv", stringsAsFactors = FALSE)
+image <- read.csv(file = "data/extdata/image.csv", stringsAsFactors = FALSE)
 
-# extract information from the "cells.mat" object
-image_number <- cells.mat$ImageNumber # check if this exists
-cell_number <- cells.mat$ObjectNumber # check if this exists
+relationships <- read.delim(file = "data/extdata/Object relationships.csv", 
+                            stringsAsFactors = FALSE)
+
+panel <- read.csv(file = "data/extdata/panel.csv", stringsAsFactors = FALSE)
 ```
+
+## Data cleaning
+
+
 
 # What single-cell variables should be included in the SingleCellExperiment (SCE) object?
 [ImcSegmentationPipeline](github.com/BodenmillerGroup/ImcSegmentationPipeline) will measure multiple variables for every object. 
