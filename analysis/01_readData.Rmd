@@ -41,6 +41,35 @@ panel <- read.csv(file = "data/extdata/panel.csv", stringsAsFactors = FALSE)
 
 ## Data cleaning
 
+The __cell.csv__ contains `r ncol(cells)` cell-level features.
+These include cell-specific intensity counts per marker as well as positional information, object and image identifiers.
+These are crucial to link cells to individual images (and image-level metadata) as well as to segmented objects on images.
+The `colnames` of the __cells.csv__ file indicates the measured features. 
+All channel (marker)-specific intensity features are stored in the format `..._cX`, where X indicates the channel number.   
+An overview on which features were acquired can be obtained after excluding the channel ID.
+
+```{r cell-features}
+unique( sub("_c[0-9]*$", "", colnames(cells)) )
+```
+
+A number of different area, intensity, location and neighbourhood features were selected for export from `CellProfiler`.
+For more details on these features, please refer to the manual ([CellProfiler Measurement](https://cellprofiler-manual.s3.amazonaws.com/CellProfiler-3.1.9/modules/measurement.html#)).
+To obtain cell-specific intesities for each marker, a number of different measurements are available:
+
+* __IntegratedIntensity__: Sum of pixel intensities across all pixels of each cell
+* __MeanIntensity__: Mean pixel intensity across all pixels of each cell
+* __MedianIntensity__: Median pixel intensity across all pixels of each cell
+
+Furthermore, these measures can be calculated on different image stacks:
+
+* __FullStack__: Contains the raw pixel intensities 
+* __FullStackFiltered__:  Contains the pixel intensities after applying a selective median filter to remove 'hot pixels' (unusually bright pixels)
+* __ProbabStack__: Contains the probability for each pixel to be associated with a certain class selected during pixel classification (__Refs!__)
+
+
+For our purposes, we will work on the spillover corrected counts averaged across each cell after removing 'hot pixels' (unusually bright pixels). 
+Here, spillover-correction was done using a least-squares (`Intensity_MeanIntensityCorrectedLS_FullStackFiltered`) and non-negative least-squares regression (`Intensity_MeanIntensityCorrected_FullStackFiltered`) approach (__Refs!__).
+To avoid negative values, we will select the non-negative least-squares corrected counts, which can be accessed via:
 
 
 # What single-cell variables should be included in the SingleCellExperiment (SCE) object?
