@@ -10,6 +10,7 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE)
+library(BiocStyle)
 ```
 
 # Data import
@@ -162,7 +163,7 @@ It is recommended to store unique cell IDs as `rownames` of the cell-specific me
 This will be crucial when merging `SingleCellExperiment` objects in cases where multiple batches were at first analysed independently.
 For this example dataset, the sample ID and ROI uniquely defines an image:
 
-```{r set-rownames}
+```{r set-rownames-cells}
 rownames(cell_meta) <- paste(cell_meta$SampleId, cell_meta$ROI, cell_meta$CellNumber, sep = "_")
 ```
 
@@ -171,7 +172,8 @@ rownames(cell_meta) <- paste(cell_meta$SampleId, cell_meta$ROI, cell_meta$CellNu
 The __Panel.csv__ contains all informative metadata describing the markers (features) measured in the experiment.
 
 ```{r show-panel}
-panel
+library(DT)
+DT::datatable(panel)
 ```
 
 However, this file is manually created and therefore error-prone.
@@ -199,7 +201,7 @@ panel <- panel[match(channel_mass[,1], panel$Metal.Tag),]
 The `panel$Target` entry contains the correct annotation of proteins measured in the experiment.
 These should be used as `rownames` of the `panel` data frame and later on the `SingleCellexperiment` object.
 
-```{r set-rownames}
+```{r set-rownames-panel}
 # Use clean target as rownames
 rownames(panel) <- panel$Target
 ```

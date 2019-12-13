@@ -7,6 +7,11 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE)
+library(BiocStyle)
+```
+
 # Abstract
 
 __TODO:__ Explain the technology and outline the critical steps in data analysis
