@@ -60,6 +60,13 @@ image$ImageNumber <- c(1,2,3,4)
 
 panel <- read.csv("/Volumes/immucan_volume/processed_data/Panel_1/Batch20191023/20191101_IMMUcan_panel_1_1.05.csv")
 
+#################################
+# 5. Prepare channel order file #
+#################################
+
+channel_mass <- read.csv("/Volumes/immucan_volume/processed_data/Panel_1/Batch20191023/IMMUcan_Batch20191023_panel_1_1_1.05/tiffs/IMMUcan_Batch20191023_10032143-THOR-VAR-TIS-UNST-03_s0_p5_r1_a1_ac_full.csv",
+                         header = FALSE)
+
 ######################
 # 5. Write out files #
 ######################
@@ -68,3 +75,5 @@ write.csv(cells, "data/extdata/cells.csv", row.names = FALSE)
 write.csv(relationships, "data/extdata/Object relationships.csv", row.names = FALSE)
 write.csv(image, "data/extdata/image.csv", row.names = FALSE)
 write.csv(panel, "data/extdata/panel.csv", row.names = FALSE)
+write.csv(channel_mass, "data/extdata/IMMUcan_Batch20191023_10032143-THOR-VAR-TIS-UNST-03_s0_p5_r1_a1_ac_full.csv", row.names = FALSE)
+
