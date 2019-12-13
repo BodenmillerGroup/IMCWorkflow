@@ -252,65 +252,37 @@ g <- graph_from_data_frame(cur_df)
 g
 ```
 
+# Create the `SingleCellExperiment` object
 
+After collecting all relevant intensities, metadata and cell relationships, all data can be stored in a `SingleCellExperiment` object.
+As of `Bioconductor` convention, cells are stored in the columns and features are stored in the rows.
+In the first step, the `SingleCellExperiment` object is created based on the cell-specific marker intensities and `rownames` and `colnames` are propagated from the metadata to the `SingleCellExperiment` object.
 
-# Create a `SingleCellExperiment` object
-Now it's time to create your `SCE` object which combines all the different facets of your data.
-For each measured variable, there will be a separate `assay` in the object. 
-
-```{r, eval=FALSE, message=FALSE}
+```{r create-SCE}
 library(SingleCellExperiment)
-# Build the SingleCellExperiment object with the different measuretypes (= assays)
-sce <- SingleCellExperiment::SingleCellExperiment(assays = list(
-  meanintensity=t(cells.meanintensity),
-  meanintensity_corrected=t(cells.meanintensity.corrected)))
-  
-# Build the row metadata
-row.data <- DataFrame(row.names = colnames(cells.meanintensity),
-                        panel.mat)
-  
-# Build the column metadata
-col.data <- DataFrame(row.names = rownames(cells.meanintensity),
-                      image_number = image_number,
-                      cell_number = cell_number)
-  
-# Add these metadata to SCE object
-colData(sce) <- col.data
-rowData(sce) <- row.data
+# Create SCE object
+sce <- SingleCellExperiment(assays = list(counts = t(cur_counts)))
+
+# Set marker name as rownames and cellID as colnames
+rownames(sce) <- rownames(panel)
+colnames(sce) <- rownames(cell_meta)
 ```
 
-# Add object relationship to the SCE object
-[ImcSegmentationPipeline](github.com/BodenmillerGroup/ImcSegmentationPipeline) will furthermore create a file containing relationship information for all the single-cells (neighbours of single-cells). 
-We also want this information to be part of our `SingleCellExperiment` object. 
-This kind of information can be stored in the `ColDat` of the object. 
-Each row represents a cell, each column will contain information for this cell. 
-One column is the neighbourhood information, containing IDs of neighbouring cells. 
+Next, the cell-level metadata are stored in the `colData(x)` slot, the panel information in the `rowData(x)` slot and the graph object in the `metadata(x)` slot.
 
-```{r, eval=FALSE}
-#Convert to wide format
-relationships.mat = as.data.table(relationships.mat)
-relationships.mat <- relationships.mat[, id := paste(.BY,collapse =  "_"), by=.(First.Image.Number,First.Object.Number)]
-setkey(relationships.mat ,id)
-relationships.mat[, myorder := 1:.N, by = .(id)]
-rel_dat_wide = dcast.data.table(relationships.mat,formula = 'First.Image.Number + First.Object.Number ~ myorder', value.var = 'Second.Object.Number')
-
-#Convert to simple list
-neighb_lists <- split(rel_dat_wide[,3:ncol(rel_dat_wide)], seq(nrow(rel_dat_wide)))
-neighb_lists = lapply(neighb_lists, function(x) unlist(x)[!is.na(x)])
-neighb_frame = DataFrame(rel_dat_wide[,1:2],SimpleList(neighb_lists))
-
-# To make sure the order corresponds 
-experiment_order = colData(sce)
-colnames(experiment_order) = c("First.Image.Number","First.Object.Number")
-neighb_frame = neighb_frame[order(match(neighb_frame[,c("First.Image.Number","First.Object.Number")],experiment_order)),]
-
-# add relationship information to SCE object
-colData(sce) = DataFrame(colData(sce),neighb_frame)
+```{r store-metadata}
+colData(sce) <- cell_meta
+rowData(sce) <- panel
+metadata(sce) <- list(graph = g)
+sce
 ```
 
-# Save `SingleCellExperiment` Object
-```{r, eval=FALSE}
-saveRDS(sce, "data/extdata/SingleCellExperiment.rds")
+# Save SCE object
+
+The `SingleCellexperiment` can now be saved to disc and easily accessed using the `saveRDS` function.
+
+```{r save-RDS}
+saveRDS(sce, "data/extdata/sce.rds")
 ```
 
 
