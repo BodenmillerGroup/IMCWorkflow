@@ -9,7 +9,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval=FALSE, message=FALSE)
+knitr::opts_chunk$set(echo = TRUE, message=FALSE)
 ```
 
 # Data import
@@ -53,6 +53,8 @@ An overview on which features were acquired can be obtained after excluding the 
 unique( sub("_c[0-9]*$", "", colnames(cells)) )
 ```
 
+### Selecting cell-specific intensities
+
 A number of different area, intensity, location and neighbourhood features were selected for export from `CellProfiler`.
 For more details on these features, please refer to the manual ([CellProfiler Measurement](https://cellprofiler-manual.s3.amazonaws.com/CellProfiler-3.1.9/modules/measurement.html#)).
 To obtain cell-specific intesities for each marker, a number of different measurements are available:
@@ -71,17 +73,98 @@ In addition, intensities can corrected for spill-over between channels (__Cell S
 This is either done on the pixel- or cell-level intensities.
 These cell-level corrected features are either stored as __MeanIntensityCorrectedLS__ using a least-squares regression for correction or _MeanIntensityCorrected_ using a non-negative least-squares regression for correction (__Refs!__)
 For our purposes, we will work on the spillover corrected counts averaged across each cell after removing 'hot pixels' (unusually bright pixels). 
-Here, spillover-correction was done using a least-squares (`Intensity_MeanIntensityCorrectedLS_FullStackFiltered`) and non-negative least-squares regression (`Intensity_MeanIntensityCorrected_FullStackFiltered`) approach (__Refs!__).
 To avoid negative values, we will select the non-negative least-squares corrected counts, which can be accessed via:
 
-```{r, eval=FALSE}
-# create an object for each measured variable and for the unique stacks
-cells.meanintensity <- cells.mat[,grepl("Intensity_MeanIntensity_FullStackFiltered_", colnames(cells.mat))]
-cells.meanintensity.corrected <- cells.mat[,grepl("Intensity_MeanIntensityCorrected_FullStackFiltered_", colnames(cells.mat))]
+```{r select-counts}
+cur_counts <- cells[,grepl("Intensity_MeanIntensityCorrected_FullStackFiltered", colnames(cells))]
+```
 
-# scale the count data with the scaling factor stored in image.met
-cells.meanintensity = cells.meanintensity * image.mat[, "Scaling_FullStackFiltered"][1]
-cells.meanintensity.corrected = cells.meanintensity.corrected * image.mat[, "Scaling_FullStackFiltered"][1]
+By default, CellProfiler scales all pixel intensities between 0 and 1.
+This is done by dividing each count by the maximum possible intensity value (see [MeasureObjectIntensity](https://cellprofiler-manual.s3.amazonaws.com/CellProfiler-3.0.0/modules/measurement.html#measureobjectintensity) for more info).
+In the case of 16-bit encoding (where 0 is a valid intensity), this scaling value is `2^16-1 = 65535`.
+Therefore, to obtain raw cell-specific intensities, mean intensites are scaled by this value. 
+CellProfiler by defaults stores the scaling factor in the image metadata file:
+
+```{r scale-counts-1}
+image$Scaling_FullStack
+```
+
+Intensities are scaled as follows:
+
+```{r scale-counts-2}
+cur_counts <- cur_counts * image$Scaling_FullStack[1]
+```
+
+__Please make sure to scale images accordingly if you use different encodings.__
+
+### Cell-specific metadata
+
+The `SingleCellExperiment` allows storing cell/image- and marker-specific metadata.
+On the per-cell-level, metadata include:
+
+* the cell's number (identifier)
+* the cell's location
+* the cell's shape features
+
+These information are stored in a [DataFrame](https://bioconductor.org/packages/release/bioc/manuals/S4Vectors/man/S4Vectors.pdf) object and can be obtained from the __cell.csv__ file.
+
+```{r cell-metadata}
+cell_meta <- DataFrame(CellNumber = cells$ObjectNumber,
+                       Center_X = cells$Location_Center_X,
+                       Center_Y = cells$Location_Center_Y,
+                       Area = cells$AreaShape_Area,
+                       MajorAxisLength = cells$AreaShape_MajorAxisLength,
+                       MinorAxisLength = cells$AreaShape_MinorAxisLength)
+```
+
+A number of cell-specific metadata can be obtained using CellProfiler.
+The [CellProfiler manual](https://cellprofiler-manual.s3.amazonaws.com/CellProfiler-3.1.9/modules/measurement.html#) provides more information on further features.
+
+### Image-specific metadata
+
+Image-specific metadata can be stored together with cell-specific metadata.
+These will be added to the cell-specific metadata `DataFrame`.
+Alternatively, the [CATALYST](https://bioconductor.org/packages/release/bioc/html/CATALYST.html) package supports storing the image-specific metadata in an `experiment_info` entry in the `metadata(x)` slot of the `SingleCellExperiment` object.
+Cells and images are linked via a `sample_id` entry in `colData(x)` and `metadata(x)$experiment_info`.
+
+Image-specific metadata are stored in the __Image.csv__ file produced by CellProfiler (__Ref__).
+More specifically, this file contains image- and acquisition-specific meatdata.
+Acquisition metadata can be idenfified by the `Metadata_` entries:
+
+```{r show-ac-metadata}
+colnames(image)[grepl("Metadata_", colnames(image))]
+```
+
+Specifically, the `Metadata_acname` and `Metadata_roiid` contain information that need to be stored to uniquely identify cells from different images.
+The `cells$ImageNumber` entry associates each cell to its corresponding image in the __Image.csv__ file.
+That allows linking cells to image-specific metadata entries.
+Here, the image number, batch ID and sample ID will be stored in the cell-specific metadata object.
+For easier string subsetting, the [stringr](https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html) package can be used.
+
+```{r store-image-metadata}
+library(stringr)
+
+image$Metadata_acname
+image$Metadata_roiid
+
+# Store image number in cell-specific metadata object
+cell_meta$ImageNumber <- cells$ImageNumber
+
+# Split acquisition information
+ac_info <- str_split(image$Metadata_acname, "_", simplify = TRUE)
+cell_meta$BatchId <- ac_info[cell_meta$ImageNumber,2]
+cell_meta$SampleId <- ac_info[cell_meta$ImageNumber,3]
+cell_meta$ROI <- image$Metadata_roiid[cell_meta$ImageNumber]
+```
+
+It is recommended to store unique cell IDs as `rownames` of the cell-specific metadata object
+This will be crucial when merging `SingleCellExperiment` objects in cases where multiple batches were at first analysed independently.
+For this example dataset, the sample ID and ROI uniquely defines an image:
+
+```{r set-rownames}
+rownames(cell_meta) <- paste(cell_meta$SampleId, cell_meta$ROI, cell_meta$CellNumber, sep = "_")
+```
+
 
 # channels stored in the "panel.mat" and in the "cells.X" object
 panel.channels <- paste0("c", 1:nrow(panel.mat))
