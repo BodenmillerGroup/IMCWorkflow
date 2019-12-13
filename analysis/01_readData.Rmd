@@ -1,5 +1,6 @@
 ---
 title: "Data import"
+author: "Nils Eling"
 output:
   workflowr::wflow_html:
     toc: true
@@ -66,26 +67,13 @@ Furthermore, these measures can be calculated on different image stacks:
 * __FullStackFiltered__:  Contains the pixel intensities after applying a selective median filter to remove 'hot pixels' (unusually bright pixels)
 * __ProbabStack__: Contains the probability for each pixel to be associated with a certain class selected during pixel classification (__Refs!__)
 
-
+In addition, intensities can corrected for spill-over between channels (__Cell Systems ref__).
+This is either done on the pixel- or cell-level intensities.
+These cell-level corrected features are either stored as __MeanIntensityCorrectedLS__ using a least-squares regression for correction or _MeanIntensityCorrected_ using a non-negative least-squares regression for correction (__Refs!__)
 For our purposes, we will work on the spillover corrected counts averaged across each cell after removing 'hot pixels' (unusually bright pixels). 
 Here, spillover-correction was done using a least-squares (`Intensity_MeanIntensityCorrectedLS_FullStackFiltered`) and non-negative least-squares regression (`Intensity_MeanIntensityCorrected_FullStackFiltered`) approach (__Refs!__).
 To avoid negative values, we will select the non-negative least-squares corrected counts, which can be accessed via:
 
-
-# What single-cell variables should be included in the SingleCellExperiment (SCE) object?
-[ImcSegmentationPipeline](github.com/BodenmillerGroup/ImcSegmentationPipeline) will measure multiple variables for every object. 
-This measurment can also be done on different stacks (e.g. `FullStack`, `FullStackFiltered`, `ProbabStack` etc.). 
-A measured single-cell variable is for example the mean intensity per channel. 
-Other potential variables are median, maximum, integrated counts etc. 
-It is now important to define which variables from which stack should be included in your SCE Object in order to keep your object small and your analyis efficient. 
-Create a own object for each measure variable (e.g. `cells.meanintensity`, `cells.meanintensity.corrected`). 
-If you want to know what variables are available, use the following command: 
-```{r} 
-# return unique measure variables/stacks without channels
-# sub(...)
-colnames(cells.mat)
-```
- 
 ```{r, eval=FALSE}
 # create an object for each measured variable and for the unique stacks
 cells.meanintensity <- cells.mat[,grepl("Intensity_MeanIntensity_FullStackFiltered_", colnames(cells.mat))]
