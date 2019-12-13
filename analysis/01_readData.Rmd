@@ -34,7 +34,7 @@ cells <- read.csv(file = "data/extdata/cells.csv", stringsAsFactors = FALSE)
 
 image <- read.csv(file = "data/extdata/image.csv", stringsAsFactors = FALSE)
 
-relationships <- read.delim(file = "data/extdata/Object relationships.csv", 
+relationships <- read.csv(file = "data/extdata/Object relationships.csv", 
                             stringsAsFactors = FALSE)
 
 panel <- read.csv(file = "data/extdata/panel.csv", stringsAsFactors = FALSE)
@@ -106,9 +106,10 @@ On the per-cell-level, metadata include:
 * the cell's location
 * the cell's shape features
 
-These information are stored in a [DataFrame](https://bioconductor.org/packages/release/bioc/manuals/S4Vectors/man/S4Vectors.pdf) object and can be obtained from the __cell.csv__ file.
+These information are stored in a [DataFrame](https://bioconductor.org/packages/release/bioc/manuals/S4Vectors/man/S4Vectors.pdf) object of the `S4Vectors` package and can be obtained from the __cell.csv__ file.
 
 ```{r cell-metadata}
+library(S4Vectors)
 cell_meta <- DataFrame(CellNumber = cells$ObjectNumber,
                        Center_X = cells$Location_Center_X,
                        Center_Y = cells$Location_Center_Y,
@@ -219,9 +220,37 @@ channelNumber <- as.numeric(sub("^.*_c", "", colnames(cur_counts)))
 cur_counts <- cur_counts[,order(channelNumber, decreasing = FALSE)] 
 ```
 
-These steps now led to an object that stores the cell- and marker-specific intensities, an object that stores the cell-specific metadata and an object that stores the marker-specific metadata.
+These steps now produced an object that stores the cell- and marker-specific intensities, an object that stores the cell-specific metadata and an object that stores the marker-specific metadata.
 
+### Spatial data
 
+The [IMC Segementation Pipeline](https://github.com/BodenmillerGroup/ImcSegmentationPipeline) allows user to store information of neighbouring cells (based on a user defined distance threshold, __REF!__).
+__TODO: more explanation on where this is comming from__.
+The computationally most efficent way to store this neighbourhood information is in form of a `graph` object.
+Here, we are using the [igraph](https://igraph.org/) package to construct the graph based on __Object relationship.csv__ file.
+This `igraph` object can be stored in the `metadata(x)` slot of the `SingleCellExperiment` object, which does not allow correct and consistent sub-setting.
+The graph is constructed using the unique cell IDs rather than `ImageNumber_ObjectNumber` to allow consitent analysis across sample batches.
+
+```{r igraph-object, message=FALSE}
+library(igraph)
+# Construct neighbour data.frame
+# First in the ImageNumber_ObjectNumber format
+cur_df <- data.frame(CellID_1 = paste0(relationships$First.Image.Number, 
+                                       "_", relationships$First.Object.Number),
+                     CellID_2 = paste0(relationships$Second.Image.Number, 
+                                       "_", relationships$Second.Object.Number))
+
+# Create simple cell IDs
+cellID <- paste0(cell_meta$ImageNumber, "_", cell_meta$CellNumber)
+
+# Change cell IDs
+cur_df$CellID_1 <- rownames(cell_meta)[match(cur_df$CellID_1, cellID)]
+cur_df$CellID_2 <- rownames(cell_meta)[match(cur_df$CellID_2, cellID)]
+
+# Build graph
+g <- graph_from_data_frame(cur_df)
+g
+```
 
 
 
