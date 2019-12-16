@@ -25,7 +25,7 @@ library(ggridges)
 This part will load the single cell experiment object which was created under 1_read_in_data.
 
 ```{r load-data}
-sce <- readRDS(file = "data/extdata/sce.rds")
+sce <- readRDS("data/extdata/sce.rds")
 ```
 
 The next chunk will perform different transformations of the data.
