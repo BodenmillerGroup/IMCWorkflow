@@ -254,7 +254,7 @@ g <- graph_from_data_frame(cur_df)
 g
 ```
 
-# Create the `SingleCellExperiment` object
+# Create the SingleCellExperiment object
 
 After collecting all relevant intensities, metadata and cell relationships, all data can be stored in a `SingleCellExperiment` object.
 As of `Bioconductor` convention, cells are stored in the columns and features are stored in the rows.
@@ -284,7 +284,7 @@ sce
 The `SingleCellexperiment` can now be saved to disc and easily accessed using the `saveRDS` function.
 
 ```{r save-RDS}
-saveRDS(sce, "data/extdata/sce.rds")
+saveRDS(sce, "output/sce.rds")
 ```
 
 
