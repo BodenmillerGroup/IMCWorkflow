@@ -1,18 +1,3 @@
----
-title: "Data import"
-author: "Nils Eling"
-output:
-  md_document:
-    variant: markdown_github
-editor_options:
-  chunk_output_type: console
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message=FALSE)
-library(BiocStyle)
-```
-
 # Data import
 
 Raw image files in .mcd format are processed using the [IMC Segementation Pipeline](https://github.com/BodenmillerGroup/ImcSegmentationPipeline).
