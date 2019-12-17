@@ -1,16 +1,5 @@
----
-title: "Quality control"
-author: "Nils Eling"
-output:
-  md_document:
-    variant: markdown_github
-editor_options:
-  chunk_output_type: console
----
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
-```
+# Quality Control
 
 In this section, we first read in the `SingleCellExperiment` object generated in the `01_readData` script.
 The major points of the following analysis strategy include:
