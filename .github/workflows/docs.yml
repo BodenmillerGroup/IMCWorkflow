@@ -10,12 +10,9 @@ jobs:
   build: 
     name: Build and Deploy Documentation 
     runs-on: ubuntu-latest 
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps: 
       - name: Checkout Master 
         uses: actions/checkout@v2
-	     
       - name: Set up Python 
         uses: actions/setup-python@v2 
         with: 
