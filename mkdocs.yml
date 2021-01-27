@@ -1,5 +1,14 @@
 theme:
   name: material
+  palette:
+    primary: teal
+    accent: teal
+  icon:
+    repo: fontawesome/brands/github
+
+repo_url: https://github.com/BodenmillerGroup/IMCWorkflow
+repo_name: BodenmillerGroup/IMCWorkflow
+
 
 site_name: Primer to IMC analysis
 nav:
