@@ -1,4 +1,7 @@
 site_name: Primer to IMC analysis
 nav:
     - Home: index.md
-    - Inroduction: intro.md
+    - Introduction: intro.md
+    
+markdown_extensions:
+  - footnotes

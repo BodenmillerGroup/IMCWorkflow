@@ -9,7 +9,7 @@ Upon acquistion, raw images are converted to .ome.tiff files and processed for d
 Processing includes cell segmentation and feature extraction.
 The extracted features per marker are later on read into R for single-cell data analysis.
 Common analyses steps include quality control and intensity normalization, cell-type identification via clustering or classification and spatial data analysis.
-For more information on imaging mass cytometry, please refer to the more extended [Introduction]().
+For more information on imaging mass cytometry, please refer to the more extended [Introduction](https://bodenmillergroup.github.io/IMCWorkflow/intro/).
 
 
 
