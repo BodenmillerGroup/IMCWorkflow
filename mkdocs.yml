@@ -1,1 +1,4 @@
 site_name: Primer to IMC analysis
+nav:
+    - Home: index.md
+    - Inroduction: intro.md
