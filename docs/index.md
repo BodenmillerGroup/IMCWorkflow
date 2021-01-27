@@ -13,18 +13,18 @@ For more information on imaging mass cytometry, please refer to the more extende
 
 ## Pre-processing of IMC data
 
-Explain the key steps for pre-processing IMC data.
+Explain the key steps for pre-processing IMC data.  
 For more detailed explanations see [Pre-processing](https://bodenmillergroup.github.io/IMCWorkflow/prepro/).
 
 ## Viewers for IMC data
 
-histoCAT, histoCAT++, histoCAT-web (?), napari-imc
+histoCAT, histoCAT++, histoCAT-web (?), napari-imc  
 For more detailed explanations see [Viewers](https://bodenmillergroup.github.io/IMCWorkflow/viewers/).
 
 ## Downstream analysis
 
-IMCDataAnalysis, neighbourhood, cytomapper, imcdatasets
-For more detailed explanations see [Viewers](https://bodenmillergroup.github.io/IMCWorkflow/analysis/).
+IMCDataAnalysis, neighbourhood, cytomapper, imcdatasets  
+For more detailed explanations see [Analysis](https://bodenmillergroup.github.io/IMCWorkflow/analysis/).
 
 ## Contributors
 
