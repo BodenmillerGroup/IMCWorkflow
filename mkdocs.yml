@@ -5,6 +5,9 @@ site_name: Primer to IMC analysis
 nav:
     - Home: index.md
     - Introduction: intro.md
+    - Pre-processing: prepro.md
+    - Viewers: viewers.md
+    - Analysis: analysis.md
     
 markdown_extensions:
-  - footnotes
+    - footnotes
