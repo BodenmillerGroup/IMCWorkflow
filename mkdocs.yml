@@ -9,6 +9,7 @@ theme:
 repo_url: https://github.com/BodenmillerGroup/IMCWorkflow
 repo_name: BodenmillerGroup/IMCWorkflow
 
+use_directory_urls: false
 
 site_name: Primer to IMC analysis
 nav:
