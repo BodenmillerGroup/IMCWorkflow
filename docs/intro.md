@@ -2,7 +2,7 @@
 
 Imaging mass cytometry utilizes metal-tagged antibodies to detect up to 40 proteins in tissues.
 
-![IMC_workflow](imgs/IMC_workflow.png)
+![IMC_workflow](img/IMC_workflow.png)
 *Overview of imaging mass cytometry data acquisition. Taken from Giesen et al.[^fn1]*
 
 ## What it is
