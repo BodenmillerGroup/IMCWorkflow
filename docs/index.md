@@ -9,22 +9,22 @@ Upon acquistion, raw images are converted to .ome.tiff files and processed for d
 Processing includes cell segmentation and feature extraction.
 The extracted features per marker are later on read into R for single-cell data analysis.
 Common analyses steps include quality control and intensity normalization, cell-type identification via clustering or classification and spatial data analysis.
-For more information on imaging mass cytometry, please refer to the more extended [Introduction](https://bodenmillergroup.github.io/IMCWorkflow/intro/).
+For more information on imaging mass cytometry, please refer to the more extended [Introduction](intro.md).
 
 ## Pre-processing of IMC data
 
 Explain the key steps for pre-processing IMC data.  
-For more detailed explanations see [Pre-processing](https://bodenmillergroup.github.io/IMCWorkflow/prepro/).
+For more detailed explanations see [Pre-processing](prepro.md).
 
 ## Viewers for IMC data
 
 histoCAT, histoCAT++, histoCAT-web (?), napari-imc  
-For more detailed explanations see [Viewers](https://bodenmillergroup.github.io/IMCWorkflow/viewers/).
+For more detailed explanations see [Viewers](viewers.md).
 
 ## Downstream analysis
 
 IMCDataAnalysis, neighbourhood, cytomapper, imcdatasets  
-For more detailed explanations see [Analysis](https://bodenmillergroup.github.io/IMCWorkflow/analysis/).
+For more detailed explanations see [Analysis](analysis.md).
 
 ## Contributors
 
