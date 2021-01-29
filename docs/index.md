@@ -22,7 +22,7 @@ For more details see [Pre-processing](prepro.md).
 
 ## Viewers for IMC data
 
-Raw `.mcd` files can be interactively visualized using the [MCD Viewer](https://www.fluidigm.com/software) software distributed by Fluidigm<sup>&reg;<\sup>.
+Raw `.mcd` files can be interactively visualized using the [MCD Viewer](https://www.fluidigm.com/software) software distributed by Fluidigm<sup>&reg;</sup>.
 
 To further perform data analysis based on the images, the [histoCAT](https://bodenmillergroup.github.io/histoCAT/) toolbox supports interactive image and data visualization, clustering and spatial data analysis.
 
@@ -39,7 +39,7 @@ To get an overview on common analysis steps, please refer to [Analysis](analysis
 
 ## Contributors
 
-Nils Eling [:fontawesome-fa-github:](https://github.com/nilseling) [:fontawesome-fa-twitter:](https://twitter.com/NilsEling) [:fontawesome-fa-home:](https://nilseling.github.io/) :fontawesome-fa-github: :fontawesome-github:
+Nils Eling [:fontawesome-brands-github:](https://github.com/nilseling) [:fontawesome-brands-twitter:](https://twitter.com/NilsEling) [:fontawesome-solid-home:](https://nilseling.github.io/)
 
 Whoever wants to contribute
 
