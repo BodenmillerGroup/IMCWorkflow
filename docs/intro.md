@@ -9,6 +9,9 @@ Imaging mass cytometry utilizes metal-tagged antibodies to detect up to 40 prote
 
 ## How it works
 
+Explain panoramas
+
 ## How the data looks like
+
 
 [^fn1]: Giesen, C. _et al._ 2014. “Highly Multiplexed Imaging of Tumor Tissues with Subcellular Resolution by Mass Cytometry.” Nature Methods 11 (4): 417–22.

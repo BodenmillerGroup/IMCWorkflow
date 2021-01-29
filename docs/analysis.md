@@ -5,6 +5,10 @@ More to this in the [IMCDataAnalysis](https://github.com/BodenmillerGroup/IMCDat
 
 ## Reading in the data
 
+## Example datasets
+
+imcdatasets
+
 ## Quality control
 
 ## Cell-type identification
