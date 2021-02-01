@@ -47,4 +47,4 @@ Whoever wants to contribute
 
 To come...
 
-[^fn1]: Giesen, C. _et al._ 2014. “Highly Multiplexed Imaging of Tumor Tissues with Subcellular Resolution by Mass Cytometry.” Nature Methods 11 (4): 417–22.
+[^fn1]: Giesen C. _et al._ (2014) Highly multiplexed imaging of tumor tissues with subcellular resolution by mass cytometry. Nat. Methods, 11, 417–422.
