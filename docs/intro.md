@@ -26,8 +26,9 @@ Is there a classic staining protocol?
 
 ### Data acquisition
 
-Explain panoramas
-Region selection
+Explain panoramas  
+Region selection  
+[napping](https://github.com/BodenmillerGroup/napping)
 
 ## How the data looks like
 
