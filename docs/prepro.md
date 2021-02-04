@@ -10,3 +10,6 @@ Link to other pipelines
 
 ### Spillover correction (optional)
 
+## Alternative approaches
+
+### imctoolkit
