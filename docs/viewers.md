@@ -10,5 +10,7 @@ Docs: [https://www.fluidigm.com/binaries/content/documents/fluidigm/resources/mc
 
 ## napari-imc
 
+## Potentially biobrowse
+
 Compare Viewers
 
