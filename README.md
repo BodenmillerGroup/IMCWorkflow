@@ -1,65 +1,115 @@
-# IMCWorkflow
+# IMC data analysis tools
 
-This repository contains an overview of available tools to use for imaging mass cytometry data analysis.
+This repository contains an overview of available tools to use for imaging mass cytometry (IMC) data analysis.
 
-## Related repositories
+## Image processing
 
-Here, we list related repositories in the order they are used throughout IMC data analysis steps.
+Common tasks for IMC data analysis first include image pre-processing, segmentation, feature extraction and data export.
+The initial [IMCSegmentationPipeline](https://github.com/BodenmillerGroup/ImcSegmentationPipeline) was developed to allow
+manual image processing for IMC and other multiplexed imaging data.
 
-### Pre-processing of raw data
+Building up on the `IMCSegmentationPipeline`, the [steinbock](https://github.com/BodenmillerGroup/steinbock) framework offers user-friendly processing of multi-channel images and supports different segmentation strategies.
 
-Preprocessing of IMC data is done using the [imctools]() python package by following the [IMCSegmentationPipeline](https://github.com/BodenmillerGroup/ImcSegmentationPipeline).
-This pipeline uses custom [CellProfiler plugins](https://github.com/BodenmillerGroup/ImcPluginsCP) and its [automated version](https://github.com/BodenmillerGroup/ImcSegmentationSnakemake) is implemented in SnakeMake.
+### IMC Segmentation pipeline
 
-[https://github.com/BodenmillerGroup/imctools](https://github.com/BodenmillerGroup/imctools)  
-Docs: [https://bodenmillergroup.github.io/imctools/](https://bodenmillergroup.github.io/imctools/)  
+The [ImcSegmentationPipeline](https://github.com/BodenmillerGroup/ImcSegmentationPipeline) uses the [imctools](https://github.com/BodenmillerGroup/imctools) python package to handle IMC data. Custom [CellProfiler plugins](https://github.com/BodenmillerGroup/ImcPluginsCP) support multi-channel image analysis within [CellProfiler](https://cellprofiler.org/). 
+In addition, [Ilastik](https://www.ilastik.org/) is needed to perform pixel classification. 
 
-[https://github.com/BodenmillerGroup/ImcSegmentationPipeline](https://github.com/BodenmillerGroup/ImcSegmentationPipeline)  
-Docs: [https://github.com/BodenmillerGroup/ImcSegmentationPipeline/blob/main/scripts/imc_preprocessing.ipynb](https://github.com/BodenmillerGroup/ImcSegmentationPipeline/blob/main/scripts/imc_preprocessing.ipynb)  
+[ImcSegmentationPipeline](https://github.com/BodenmillerGroup/ImcSegmentationPipeline)
+[ImcSegmentationPipeline Docs](https://github.com/BodenmillerGroup/ImcSegmentationPipeline/blob/main/scripts/imc_preprocessing.ipynb) 
 
-[https://github.com/BodenmillerGroup/ImcSegmentationSnakemake](https://github.com/BodenmillerGroup/ImcSegmentationSnakemake)  
-Docs: [https://github.com/BodenmillerGroup/ImcSegmentationSnakemake/blob/main/README.md](https://github.com/BodenmillerGroup/ImcSegmentationSnakemake/blob/main/README.md)  
+[imctools](https://github.com/BodenmillerGroup/imctools)
+[imctools Docs](https://bodenmillergroup.github.io/imctools/)
 
-[https://github.com/BodenmillerGroup/ImcPluginsCP](https://github.com/BodenmillerGroup/ImcPluginsCP)  
-Docs: [https://github.com/BodenmillerGroup/ImcPluginsCP/blob/master/README.rst](https://github.com/BodenmillerGroup/ImcPluginsCP/blob/master/README.rst)  
+[ImcPluginsCP](https://github.com/BodenmillerGroup/ImcPluginsCP)  
+[ImcPluginsCP Docs](https://github.com/BodenmillerGroup/ImcPluginsCP/blob/master/README.rst) 
 
-### Viewers for IMC data
+[CellProfiler](https://cellprofiler.org/)
+[CellProfiler Docs](https://cellprofiler-manual.s3.amazonaws.com/CellProfiler-4.0.7/index.html)
 
-Clasically, IMC data can be visualized using [histoCAT](https://github.com/BodenmillerGroup/histoCAT).
-Part of the `ImcSegmentationPipeline` will generate folders and file structures that can be used for the original `histoCAT` implementation.
+### steinbock
 
-[https://github.com/BodenmillerGroup/histoCAT](https://github.com/BodenmillerGroup/histoCAT)  
-Docs: [https://bodenmillergroup.github.io/histoCAT/](https://bodenmillergroup.github.io/histoCAT/)  
-Paper: [histoCAT: analysis of cell phenotypes and interactions in multiplex image cytometry data](https://www.nature.com/articles/nmeth.4391.pdf?origin=ppub)  
+The [steinbock](https://github.com/BodenmillerGroup/steinbock) framework uses the [readimc](https://github.com/BodenmillerGroup/readimc) python package for IMC-specific pre-processing. Image processing can be performed via a command line interface.
 
-Now, a [napari plugin](https://github.com/BodenmillerGroup/napari-imc) is available to directly open raw IMC data using the [napari](https://github.com/napari/napari) toolbox.
+[steinbock](https://github.com/BodenmillerGroup/steinbock)
+[steinbock Docs](https://bodenmillergroup.github.io/steinbock/latest/)
 
-[https://github.com/BodenmillerGroup/napari-imc](https://github.com/BodenmillerGroup/napari-imc)  
-Docs: TODO
+[readimc](https://github.com/BodenmillerGroup/readimc)
+[readimc Docs](https://bodenmillergroup.github.io/readimc/)
+ 
+## Viewers for IMC data
 
-### Downstream analysis in R
+The raw IMC data files in `MCD` format can be read in and visualized using the [MCD viewer](https://www.fluidigm.com/software) (only supported on Windows).
 
-After pre-processing and feature extraction, single-cell expression data can be read into a [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) or [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) object in R.
-For general single-cell analysis steps, please refer to the [Orchestrating Single-Cell Analysis with Bioconductor](https://bioconductor.org/books/release/OSCA/) book, which supports the use of the `SingleCellExperiment` package.
-A more detailed analysis workflow for IMC data is available [here](https://github.com/BodenmillerGroup/IMCDataAnalysis).
-Spatial neighbourhood analysis can be performed using the [neighbouRhood](https://github.com/BodenmillerGroup/neighbouRhood) package.
-Images can be visualized in R using the [cytomapper](https://github.com/BodenmillerGroup/cytomapper) package.
-Example datasets, which are publicly available can be obtained using the [imcdatasets]() package.
+A [napari](https://napari.org/) plugin is now available to read in raw IMC data files and visualize them in a shared coordinate system:
 
-[https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html)  
-Docs: [https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html)  
+[napari-imc](https://github.com/BodenmillerGroup/napari-imc)
 
-[https://github.com/BodenmillerGroup/IMCDataAnalysis](https://github.com/BodenmillerGroup/IMCDataAnalysis)  
-Docs: [https://bodenmillergroup.github.io/IMCDataAnalysis/](https://bodenmillergroup.github.io/IMCDataAnalysis/)  
+[napari](https://napari.org/)
+[napari Docs](https://napari.org/tutorials/index.html)
 
-[https://github.com/BodenmillerGroup/neighbouRhood](https://github.com/BodenmillerGroup/neighbouRhood)  
-Docs: [https://github.com/BodenmillerGroup/neighbouRhood/blob/master/vignettes/example_permutation_analysis.md](https://github.com/BodenmillerGroup/neighbouRhood/blob/master/vignettes/example_permutation_analysis.md)  
-Paper: [histoCAT: analysis of cell phenotypes and interactions in multiplex image cytometry data](https://www.nature.com/articles/nmeth.4391.pdf?origin=ppub)  
+After processing using the `ImcSegmentationPipeline` or `steinbock`, raw MCD files are converted into single-channel TIFF files which can be read in and visualized using [histoCAT](https://github.com/BodenmillerGroup/histoCAT). `histoCAT` also allows single-cell and spatial data analysis.
 
-[https://www.bioconductor.org/packages/release/bioc/html/cytomapper.html](https://www.bioconductor.org/packages/release/bioc/html/cytomapper.html)  
-Github: [https://github.com/BodenmillerGroup/cytomapper](https://github.com/BodenmillerGroup/cytomapper)  
-Docs: [https://bodenmillergroup.github.io/cytomapper/](https://bodenmillergroup.github.io/cytomapper/)  
-Paper: [https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btaa1061/6050702](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btaa1061/6050702)  
+[histoCAT](https://github.com/BodenmillerGroup/histoCAT)
+[histoCAT Docs](https://bodenmillergroup.github.io/histoCAT/)
+[histoCAT: analysis of cell phenotypes and interactions in multiplex image cytometry data](https://www.nature.com/articles/nmeth.4391.pdf?origin=ppub)
 
-[https://www.bioconductor.org/packages/devel/data/experiment/html/imcdatasets.html](https://www.bioconductor.org/packages/devel/data/experiment/html/imcdatasets.html)  
-Github: [https://github.com/BodenmillerGroup/imcdatasets](https://github.com/BodenmillerGroup/imcdatasets)  
+A web-application of `histoCAT` is available at:
+
+[histoCAT-web](https://github.com/BodenmillerGroup/histocat-web)
+[histoCAT-web Docs](https://bodenmillergroup.github.io/histocat-web/)
+
+## Downstream analysis
+
+After pre-processing and feature extraction, single-cell expression data can be read into R and analysed using standardized approaches.
+An overview on how to analyse single-cell data generated by multiplexed imaging can be seen here:
+
+[IMC data analysis](https://bodenmillergroup.github.io/IMCDataAnalysis/)
+
+### Reading in data
+
+The [imcRtools](https://github.com/BodenmillerGroup/imcRtools) package allows reading in spatially annotated single-cell data extracted from IMC raw data using the `ImcSegmentationPipeline` or `steinbock`. In R, single-cell data are stored in either a [SpatialExperiment](https://bioconductor.org/packages/release/bioc/html/SpatialExperiment.html) or [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) object.
+
+[imcRtools](https://github.com/BodenmillerGroup/imcRtools)
+[imcRtools Docs](https://bodenmillergroup.github.io/imcRtools/)
+
+[SpatialExperiment](https://bioconductor.org/packages/release/bioc/html/SpatialExperiment.html)
+[SpatialExperiment Docs](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html)
+
+[SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html)
+[SingleCellExperiment Docs](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html)
+
+### Single-cell analysis
+
+Within the [Bioconductor](https://www.bioconductor.org/) project, a number of single-cell analysis tools have been developed. 
+The [Orchestrating Single-Cell Analysis with Bioconductor](https://bioconductor.org/books/release/OSCA/) book offers an overview on common analysis strategies. Here, we name a number of individual packages for different tasks.
+
+[scran](https://bioconductor.org/packages/release/bioc/html/scran.html) for graph-based clustering
+
+[scater](https://bioconductor.org/packages/release/bioc/html/scater.html) for dimensionality reduction and data visualization
+
+[dittoSeq](https://bioconductor.org/packages/release/bioc/html/dittoSeq.html) for data visualziation
+
+[CATALYST](https://bioconductor.org/packages/release/bioc/html/CATALYST.html) for clustering, data visualization and differential analysis
+
+### Spatial analysis
+
+The [imcRtools](https://github.com/BodenmillerGroup/imcRtools) package offers a number of functions to perform spatial analysis of cells extracted from multi-channel images.
+
+[imcRtools](https://github.com/BodenmillerGroup/imcRtools)
+[imcRtools Docs](https://bodenmillergroup.github.io/imcRtools/)
+
+### Image visualization
+
+In R, the [cytomapper](https://www.bioconductor.org/packages/release/bioc/html/cytomapper.html) package allows pixel- and cell-level visualization of multiplexed imaging data.
+
+[cytomapper](https://www.bioconductor.org/packages/release/bioc/html/cytomapper.html)   
+[cytomapper Docs](https://bodenmillergroup.github.io/cytomapper/)  
+[cytomapper: an R/Bioconductor package for visualization of highly multiplexed imaging data](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btaa1061/6050702)
+
+### Example datasets 
+
+To access example IMC datasets, we have build the [imcdatasets](https://www.bioconductor.org/packages/devel/data/experiment/html/imcdatasets.html) Bioconductor package.
+
+[imcdatasets](https://www.bioconductor.org/packages/devel/data/experiment/html/imcdatasets.html)  
+[imcdatasets Docs](https://bodenmillergroup.github.io/imcdatasets/)   
