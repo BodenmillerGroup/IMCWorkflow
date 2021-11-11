@@ -1,6 +1,19 @@
-# Pre-processing IMC data
+# IMC image processing
 
-## Segmentation pipeline
+The following sections describe the processing of raw IMC data, which includes file type conversion, image segmentation, feature extraction and data export.
+More detailed information can be found in the main strategies for multichannel image processing:
+
+[IMC segmentation pipeline](https://github.com/BodenmillerGroup/ImcSegmentationPipeline): Raw IMC data pre-processing is performed Read more in the [Docs](https://github.com/BodenmillerGroup/ImcSegmentationPipeline/blob/main/scripts/imc_preprocessing.ipynb)
+
+[steinbock](https://github.com/BodenmillerGroup/steinbock): Read more in the [Docs](https://bodenmillergroup.github.io/steinbock/latest/).
+
+## MCD file type
+
+imctools
+
+readimc
+
+## Image pre-processing 
 
 Either explain the steps of the segmentation pipeline here or build a better documentation for the actual repository (preferred).
 
@@ -12,10 +25,10 @@ Furthermore, for each cell and each marker, multiple features are extracted.
 These include the mean marker expression, <span style="color: red;">what else is needed?</span>
 Finally, the measured features and segmentation masks are saved,
 
-### MCD file type
+## Image segmentation
 
-### Spillover correction (optional)
+## Feature extraction
 
-## Alternative approaches
+## Data export
 
-### imctoolkit
+## Spillover correction (optional)
