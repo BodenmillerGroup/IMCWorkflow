@@ -51,8 +51,10 @@ Nils Eling [:fontawesome-brands-github:](https://github.com/nilseling) [:fontawe
 
 Jonas Windhager [:fontawesome-brands-github:](https://github.com/jwindhager) [:fontawesome-brands-twitter:](https://twitter.com/JonasWindhager)
 
-## Citation
+## Publication
 
-To come...
+!!! quote ""
+    
+    Windhager J, Bodenmiller B, Eling N (2021). An end-to-end workflow for multiplexed image processing and analysis. bioRxiv. doi: https://doi.org/10.1101/2021.11.12.468357.
 
 [^fn1]: Giesen C. _et al._ (2014) Highly multiplexed imaging of tumor tissues with subcellular resolution by mass cytometry. Nat. Methods, 11, 417–422.
