@@ -22,6 +22,9 @@ nav:
 markdown_extensions:
     - footnotes
     - attr_list
+    - admonition
+    - pymdownx.details
+    - pymdownx.superfences
     - pymdownx.emoji:
         emoji_index: !!python/name:materialx.emoji.twemoji
         emoji_generator: !!python/name:materialx.emoji.to_svg
