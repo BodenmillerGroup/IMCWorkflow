@@ -9,7 +9,7 @@ After image cropping, an [ilastik](https://www.ilastik.org/) pixel classifier is
 using [CellProfiler](https://cellprofiler.org/). Features (e.g. mean pixel intensity) of segmented objects (e.g. cells) are quantified and
 exported. 
 
-!!! note
+!!! note ""
     
     Read more in the [Docs](https://github.com/BodenmillerGroup/ImcSegmentationPipeline/blob/main/scripts/imc_preprocessing.ipynb)
 
@@ -18,9 +18,9 @@ Supported tasks include IMC data preprocessing, supervised multi-channel image s
 It supports functionality similar to those of the IMC Segmentation Pipeline and further allows deep-leaarning enabled image segmentation. 
 The framework is available as platform-independent Docker container, ensuring reproducibility and user-friendly installation. 
 
-!!! note
+!!! note ""
 
-    Read more in the [Docs](https://bodenmillergroup.github.io/steinbock/latest/).
+    Read more in the [Docs](https://bodenmillergroup.github.io/steinbock/latest/) and the [paper](https://www.biorxiv.org/content/10.1101/2021.11.12.468357v1).
 
 ## MCD file type
 
