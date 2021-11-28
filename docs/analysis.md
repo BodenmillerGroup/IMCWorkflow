@@ -40,6 +40,16 @@ Broadly speaking, there are two levels of data quality control:
 
 ## Cell-type identification
 
+One of the first analysis tasks includes cell phenotyping. 
+This is commonly done by grouping cells based on marker expression and labelling these groups based on their biological role.
+Here, we list three of the major approaches to identify cell types after reading in the single-cell data.
+
+1. **Clustering-based:** The probably most common approach to identify cell types in an unbiased manner invloves clustering of single-cells based on their marker expression. For this, software packages have been developed that utilize graph-based clustering strategies (e.g. [Rphenograph](https://github.com/JinmiaoChenLab/Rphenograph), [scran](https://bioconductor.org/packages/release/bioc/vignettes/scran/inst/doc/scran.html#5_Graph-based_clustering)) or self-organising maps (the `flowSOM` implementation in the [CATALYST](https://bioconductor.org/packages/release/bioc/vignettes/CATALYST/inst/doc/differential.html#cluster-flowsom-clustering-consensusclusterplus-metaclustering) package). The [bluster](https://www.bioconductor.org/packages/release/bioc/html/bluster.html) package offers a wide variety of clustering strategies applicable to single-cell data. After clustering, the mean marker expression per group is commonly used to label clusters.
+
+2. **Gating and classiciation:** An alternative and more biased approach to identify cell types from highly multiplexed images relies on manual gating (labelling) of cells and the consecutive classification of all unlabelled cells. The [cytomapper](https://www.bioconductor.org/packages/release/bioc/vignettes/cytomapper/inst/doc/cytomapper.html#12_Gating_cells_on_images) package offers the `cytomapperShiny` application to gate cells based on their marker expression with joint visualization of the selected cells on composite images. The ground truth labels are saved and can be used as training dataset for general machine learning approaches (e.g. using [caret](https://topepo.github.io/caret/index.html), [mlr](https://mlr.mlr-org.com/) or [tidymodels](https://www.tidymodels.org/)). We observed a high classification accuracy when applying random forrest-based classification. Additionally, a more specialised framework for classifying cells is the [SingleR](https://bioconductor.org/packages/release/bioc/html/SingleR.html) package. 
+
+3. **Classification based on prior knowledge:** A classification approach that does not rely on manually labelling cells was proposed in the [Garnett](https://cole-trapnell-lab.github.io/garnett/docs/) (implemented in R) and [Astir](https://astir.readthedocs.io/en/latest/index.html) (implemented in python) modelling frameworks. Here, the user defines which cell types express which markers and cell labelling is performed automatically. 
+
 ## Data visualization
 
 tSNE and co. and cytomapper
