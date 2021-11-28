@@ -31,6 +31,13 @@ Data from individual ROIs can be read-in and processed using [imcRtools](https:/
 
 ## Quality control
 
+Quality control (QC) is a crucial step to avoid technical artefacts in downstream analyses. 
+Broadly speaking, there are two levels of data quality control:
+
+1. **Pixel-level QC:** The first step after image acquisition and pre-processing is the visual assessment of image quality. For this, interactive tools such as [napari-imc](https://github.com/BodenmillerGroup/napari-imc), [histoCAT](https://github.com/BodenmillerGroup/histoCAT), [QuPath](https://qupath.github.io/), as well as [cytomapper](https://bioconductor.org/packages/release/bioc/html/cytomapper.html) (see below) can be used. Common considerations when viewing images for the first time are as follows: (i) Are the selected markers detected to be specifically expressed (high signal-to-noise ratio, cell type specificity, adequate maximum intensity per channel, etc.)? (ii) is channel-spillover visually detectable? (iii) Are staining differences detectable between acquisitions? 
+
+2. **Cell-level QC:** After reading in the data (e.g. using `imcRtools`), cell-level QC includes (i) visualizing global staining differences between acquisition or batches (e.g. in form of ridge plots using [dittoSeq](https://www.bioconductor.org/packages//release/bioc/html/dittoSeq.html)); (ii) visualizing marker-to-marker correlations across all cells; (iii) visualizing low-dimensional representations of the data (see below); (iv) visualizing the cell density and cell size distribution per acquisition.
+
 ## Cell-type identification
 
 ## Data visualization
