@@ -16,8 +16,8 @@ The default ablation frequency of IMC is set to 200Hz, meaning a 1mm<sup>2</sup>
 
 ## How it works
 
-Requirements: tissues cut to 2-6&mu;m thickness, Antibody panel conjugated with metals
-The whole process of acquiring IMC data can be broadly split into a (i) staining and (ii) imaging part.
+IMC requires formalin-fixed and parafin-embedded (FFPE) or cryo sections, which are commonly cut to 2-6&mu;m thickness.
+These sections are stained with an antibody cocktail containing ~40 metal-tagged antibodies before laser ablation.
 
 ### Staining
 
