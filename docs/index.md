@@ -5,7 +5,7 @@ hide:
 
 # A guide to IMC data analysis
 
-This repository collects tools for imaging mass cytometry (IMC) data analysis. 
+This website collects tools for imaging mass cytometry (IMC) data analysis. 
 Common analysis steps include [image processing](process.md), [image visualization](viewers.md) and [downstream analysis](analysis.md).
 
 ## Introduction
@@ -15,15 +15,15 @@ For more information on imaging mass cytometry, please refer to the more extende
 
 ## Image processing
 
-Upon image acquisition, raw data are stored in the proprietary `.mcd` format, which contain experiment-specific metadata, one or multiple multi-channel images (one per acquisition) and the generated panoramas (see [Introduction](intro.md)).
-The first step of the pre-processing pipeline includes the conversion of images from `.mcd` to `.ome.tiff` and `.tiff` format, which is supported by most image analysis software.
+Upon image acquisition, raw data are stored in the proprietary `.mcd` format, which contains experiment-specific metadata, one or multiple multi-channel images (one per acquisition) and the generated panoramas (see [Introduction](intro.md)).
+The first step of the pre-processing pipeline includes the conversion of images from `.mcd` to `.ome.tiff` and `.tiff` format, which can be read by most image analysis software.
 
 Cell segmentation is performed using pixel-classification or deep learning based approaches outlined in [Image processing](process.md). 
-After cell segmnetation, intensity features representing marker abundance and morphological features are extracted and exported. 
+After cell segmentation, intensity features representing marker abundance and morphological features are extracted and exported. 
 
 These IMC image processing approaches are implemented in the [IMC Segmentation pipeline](https://github.com/BodenmillerGroup/ImcSegmentationPipeline) and the [steinbock](https://github.com/BodenmillerGroup/steinbock) framework.
 
-For more details see [Image processing](prepro.md).
+For more details see [Image processing](process.md).
 
 ## Interactive image visualization
 
@@ -55,6 +55,6 @@ Jonas Windhager [:fontawesome-brands-github:](https://github.com/jwindhager) [:f
 
 !!! quote ""
     
-    Windhager J, Bodenmiller B, Eling N (2021). An end-to-end workflow for multiplexed image processing and analysis. bioRxiv. doi: https://doi.org/10.1101/2021.11.12.468357.
+    [Windhager J, Bodenmiller B, Eling N (2021). An end-to-end workflow for multiplexed image processing and analysis. bioRxiv. doi: https://doi.org/10.1101/2021.11.12.468357.](https://doi.org/10.1101/2021.11.12.468357)
 
 [^fn1]: Giesen C. _et al._ (2014) Highly multiplexed imaging of tumor tissues with subcellular resolution by mass cytometry. Nat. Methods, 11, 417–422.

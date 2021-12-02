@@ -112,9 +112,9 @@ These can be used for data re-analysis and methods development and are provided 
 
 [^fn1]: Windhager J. _et al._ (2021) An end-to-end workflow for multiplexed image processing and analysis. bioRxiv
 [^fn2]: Chevrier S. _et al._ (2018) Compensation of Signal Spillover in Suspension and Imaging Mass Cytometry. Cell Systems
-[^fn3]: Goltsev Y. _et al._ (2018) Deep Profiling of Mouse Splenic Architecture with CODEX Multiplexed Imaging. Cell 174 
-[^fn4]: Schapiro D. _et al._ (2017) histoCAT: analysis of cell phenotypes and interactions in multiplex image cytometry data. Nature Methods 
-[^fn5]: Schulz D. _et al._ (2018) Simultaneous Multiplexed Imaging of mRNA and Proteins with Subcellular Resolution in Breast Cancer Tissue Samples by Mass Cytometry. Cell Systems 
+[^fn3]: Goltsev Y. _et al._ (2018) Deep Profiling of Mouse Splenic Architecture with CODEX Multiplexed Imaging. Cell 174
+[^fn4]: Schapiro D. _et al._ (2017) histoCAT: analysis of cell phenotypes and interactions in multiplex image cytometry data. Nature Methods
+[^fn5]: Schulz D. _et al._ (2018) Simultaneous Multiplexed Imaging of mRNA and Proteins with Subcellular Resolution in Breast Cancer Tissue Samples by Mass Cytometry. Cell Systems
 [^fn6]: Schürch C. M. _et al._ (2021) Coordinated Cellular Neighborhoods Orchestrate Antitumoral Immunity at the Colorectal Cancer Invasive Front. Cell
-[^fn7]: Hoch T. _et al._ (2021) Multiplexed Imaging Mass Cytometry of Chemokine Milieus in Metastatic Melanoma Characterizes Features of Response to Immunotherapy. bioRxiv 
+[^fn7]: Hoch T. _et al._ (2021) Multiplexed Imaging Mass Cytometry of Chemokine Milieus in Metastatic Melanoma Characterizes Features of Response to Immunotherapy. bioRxiv
 
