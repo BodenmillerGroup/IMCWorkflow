@@ -90,13 +90,31 @@ The `scater` package further supports visualization of cells in low dimensions a
 
 In addition, the [dittoSeq](https://www.bioconductor.org/packages//release/bioc/html/dittoSeq.html) package offers an extensive range of visualization functionality using a `SingleCellExperiment` object as input.
 
+For spatial visualization of single-cells and their interactions, the `imcRtools` package exports the [plotSpatial](https://bodenmillergroup.github.io/imcRtools/reference/plotSpatial.html) function.
+
 ## Spatial analysis
 
-imcRtools
+A number of data analysis approaches have previously been described to extract biological information from spatially annotated, single-cell resolved data[^fn3][^fn3][^fn5][^fn6][^fn7].
+The [imcRtools](https://github.com/BodenmillerGroup/imcRtools) package standardizes spatial data analysis by providing functionalities that wrap around the `SpatialExperiment` and `SingleCellExperiment` object class. 
+
+While `steinbock` or the IMC Segmentation Pipleine computes spatial object graphs, the `imcRtools` package provides the [buildSpatialGraph](https://bodenmillergroup.github.io/imcRtools/reference/buildSpatialGraph.html) function for constricting interaction graphs "on the fly".  
+
+The [aggregateNeighbors](https://bodenmillergroup.github.io/imcRtools/reference/aggregateNeighbors.html) function computes the proportions of cell types within the direct neighborhood of each cell. Alternatively, expression counts of neighboring cells are summarized. These summarized values can be used to cluster cells and detect cellular neighborhoods[^fn3][^fn6].
+
+The [patchDetection](https://bodenmillergroup.github.io/imcRtools/reference/patchDetection.html) function detects spatial clusters of defined types of cells. By defining a certain distance threshold, all cells within the vicinity of these clusters are detected as well[^fn7]. 
+
+The [countInteractions](https://bodenmillergroup.github.io/imcRtools/reference/countInteractions.html) and [testInteractions](https://bodenmillergroup.github.io/imcRtools/reference/testInteractions.html) functions allow counting and testing the average cell type to cell type interactions per image[^fn4][^fn5]. 
 
 ## Example datasets
 
-imcdatasets
+The [imcdatasets](https://github.com/BodenmillerGroup/imcdatasets) Bioconductor package provides a collection of publically available IMC datasets. 
+These can be used for data re-analysis and methods development and are provided in standardized formats using the `SingleCellExperiment` and `CytoImageList` object classes.
 
 [^fn1]: Windhager J. _et al._ (2021) An end-to-end workflow for multiplexed image processing and analysis. bioRxiv
-[^fn1]: Chevrier S. _et al._ (2018) Compensation of Signal Spillover in Suspension and Imaging Mass Cytometry. Cell Systems
+[^fn2]: Chevrier S. _et al._ (2018) Compensation of Signal Spillover in Suspension and Imaging Mass Cytometry. Cell Systems
+[^fn3]: Goltsev Y. _et al._ (2018) Deep Profiling of Mouse Splenic Architecture with CODEX Multiplexed Imaging. Cell 174 
+[^fn4]: Schapiro D. _et al._ (2017) histoCAT: analysis of cell phenotypes and interactions in multiplex image cytometry data. Nature Methods 
+[^fn5]: Schulz D. _et al._ (2018) Simultaneous Multiplexed Imaging of mRNA and Proteins with Subcellular Resolution in Breast Cancer Tissue Samples by Mass Cytometry. Cell Systems 
+[^fn6]: Schürch C. M. _et al._ (2021) Coordinated Cellular Neighborhoods Orchestrate Antitumoral Immunity at the Colorectal Cancer Invasive Front. Cell
+[^fn7]: Hoch T. _et al._ (2021) Multiplexed Imaging Mass Cytometry of Chemokine Milieus in Metastatic Melanoma Characterizes Features of Response to Immunotherapy. bioRxiv 
+
