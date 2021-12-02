@@ -6,12 +6,8 @@ IMC raw data need specialized image viewers to visualize aquisitions, panoramas 
 
 ## MCD viewer
 
-The MCD viewer distributed by Fluidigm&reg for **Windows only** allows visualization of individual MCD files.
-The user can selectd individual acquisitions (also referred to as regions of interest; ROI) and multiple channels. 
-
-!!! note ""
-
-    Read more in the [Docs](https://www.fluidigm.com/binaries/content/documents/fluidigm/resources/mcd-viewer-v1.0.560.6-user-guide/mcd-viewer-v1.0.560.6-user-guide/fluidigm%3Afile).
+The [MCD viewer](https://www.fluidigm.com/products-services/software) distributed by Fluidigm<sup>&reg;</sup> for **Windows only** allows visualization of individual MCD files.
+The user can select individual acquisitions (also referred to as regions of interest; ROI) and multiple channels. 
 
 ## histoCAT 
 
@@ -35,8 +31,8 @@ Once deployed, `histoCAT-web` supports reading in IMC raw data and offers an ext
 ## napari-imc
 
 [napari-imc](https://github.com/BodenmillerGroup/napari-imc) is a modular [napari](https://napari.org/) plugin for loading raw IMC data. 
-Upon opening MCD  files, napari-imc displays a graphical user interface for loading panoramas, acquisitions and channels. 
-For each loaded panorama and for each combination of loaded acquisition and channel, napari-imc creates an image layer. 
+Upon opening MCD files, `napari-imc` displays a graphical user interface for loading panoramas, acquisitions and channels. 
+For each loaded panorama and for each combination of loaded acquisition and channel, `napari-imc` creates an image layer. 
 In napari, image layers represent single-channel grayscale or color images that can be overlaid in the main panel. 
 Importantly, all image layers are spatially aligned. 
 Adjusting channel settings will broadcast the chosen values to the settings of all associated image layers.
