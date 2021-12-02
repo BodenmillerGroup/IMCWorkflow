@@ -52,7 +52,43 @@ Here, we list three of the major approaches to identify cell types after reading
 
 ## Data visualization
 
-tSNE and co. and cytomapper
+Visualization for bioimaging data is commonly performed on the **pixel-** and **single-cell** level:
+
+__Pixel level visualization__
+
+Interactive visualization can be performed using interactive, GUI-based tools as described in the [Image visualization](viewers.md) section. 
+As an alternative using the statistical programming language R, the [cytomapper](https://github.com/BodenmillerGroup/cytomapper) Bioconductor package supports handling and visualization of multi-channel images. 
+
+The main visualization functionality of `cytomapper` is three-fold:
+
+**plotPixels**
+
+The function takes a `CytoImageList` object (available via the `cytomapper` package) containing multi-channel images representing pixel-level expression values and optionally a `CytoImageList` object containing segementation masks and a `SingleCellExperiment` object containing cell-level metadata.
+
+It allows the visualization of pixel-level information of up to six channels and outlining cells based on cell-level metadata.
+
+**plotCells**
+
+This function takes a `CytoImageList` object containing segementation masks and a `SingleCellExperiment` object containing cell-level mean expression values and metadata information.
+
+It allows the visualization of cell-level expression data and metadata information.
+
+**cytomapperShiny**
+
+This Shiny application allows gating of cells based on their expression values and visualises selected cells on their corresponding images. 
+
+It requires at least a `SingleCellExperiment` as input and optionally `CytoImageList` objects containing segmentation masks and multi-channel images.
+
+__Single-cell level visualization__
+
+Multiple Bioconductor packages have been released to visualize single-cell data contained in a `SingleCellExperiment` or `SpatialExperiment` object.
+
+A common approach to single-cell visualization is to first perform dimensionality reduction via PCA, tSNE, UMAP or Diffusion Maps. 
+These functions are available in the [scater](https://bioconductor.org/packages/release/bioc/html/scater.html) Bioconductor package. 
+
+The `scater` package further supports visualization of cells in low dimensions and a variety of functions to visualize single-cell expression (see [here](https://bioconductor.org/packages/release/bioc/vignettes/scater/inst/doc/overview.html#3_Visualizing_expression_values)).
+
+In addition, the [dittoSeq](https://www.bioconductor.org/packages//release/bioc/html/dittoSeq.html) package offers an extensive range of visualization functionality using a `SingleCellExperiment` object as input.
 
 ## Spatial analysis
 
