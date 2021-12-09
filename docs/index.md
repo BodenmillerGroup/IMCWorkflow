@@ -51,6 +51,8 @@ Nils Eling [:fontawesome-brands-github:](https://github.com/nilseling) [:fontawe
 
 Jonas Windhager [:fontawesome-brands-github:](https://github.com/jwindhager) [:fontawesome-brands-twitter:](https://twitter.com/JonasWindhager)
 
+Daniel Schulz [:fontawesome-brands-github:](https://github.com/SchulzDan) [:fontawesome-brands-twitter:](https://twitter.com/DanielS33860077)
+
 ## Publication
 
 !!! quote ""

@@ -47,11 +47,11 @@ Once the acquisition completed an `.mcd` file (binary file format) of variable s
 
 Generally, to get a quick view on the data, multiple image viewers are available and an overview is provided in [Image visualization](viewers.md)
 
-[^fn1]: Giesen C. _et al._ (2014) Highly multiplexed imaging of tumor tissues with subcellular resolution by mass cytometry. Nat. Methods, 11, 417–422.  
-[^fn2]: Angelo M. _et al._ (2014) Multiplexed ion beam imaging of human breast tumors. Nat. Med., 20, 436–442.  
+[^fn1]: Giesen C. _et al._ (2014) Highly multiplexed imaging of tumor tissues with subcellular resolution by mass cytometry. Nat. Methods, 11, 417-422.  
+[^fn2]: Angelo M. _et al._ (2014) Multiplexed ion beam imaging of human breast tumors. Nat. Med., 20, 436-442.  
 [^fn3]: Lin J.R. _et al._ (2018) Highly multiplexed immunofluorescence imaging of human tissues and tumors using t-CyCIF and conventional optical microscopes. Elife, 7, e31657.  
-[^fn4]: Goltsev Y. _et al._ (2018) Deep profiling of mouse splenic architecture with CODEX multiplexed imaging. Cell, 174, 968–981.  
-[^fn5]: Saka S.K. _et al._ (2019) Immuno-SABER enables highly multiplexed and amplified protein imaging in tissues. Nat. Biotechnol., 37, 1080–1090.  
+[^fn4]: Goltsev Y. _et al._ (2018) Deep profiling of mouse splenic architecture with CODEX multiplexed imaging. Cell, 174, 968-981.  
+[^fn5]: Saka S.K. _et al._ (2019) Immuno-SABER enables highly multiplexed and amplified protein imaging in tissues. Nat. Biotechnol., 37, 1080-1090.  
 [^fn6]: Ijsselsteijn M.E. _et al._ (2019) A 40-Marker Panel for High Dimensional Characterization of Cancer Immune Microenvironments by Imaging Mass Cytometry. Frontiers in Immunology, 10, 2534.
-[^fn7]: Schapiro D _et al._ (2017) HistoCAT: Analysis of cell phenotypes and interactions in multiplex image cytometry data. Nat. Methods, 14, 873–876
+[^fn7]: Schapiro D _et al._ (2017) HistoCAT: Analysis of cell phenotypes and interactions in multiplex image cytometry data. Nat. Methods, 14, 873-876
 [^fn8]: napari contributors (2019). napari: a multi-dimensional image viewer for python. doi:10.5281/zenodo.3555620
