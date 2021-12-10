@@ -1,3 +1,5 @@
+<div style="text-align: right">
+
 # An introduction to imaging mass cytometry
 
 IMC utilizes metal-tagged antibodies to detect up to 40 proteins, or other molecules which may be labelled in biological samples.
@@ -46,6 +48,8 @@ Acquisition time is directly proportional to the total size of ablation and cons
 Upon completion of the acquisition an `.mcd` file of variable size is generated. This file contains all panoramas, all acquisition images and their metadata. Additionally, for each acquisition a `.txt` file is generated which holds the same pixel information as the matched acquisitions in the `.mcd` file. We refer to this data as raw data and the further processing of this data is described in [Image processing](process.md). 
 
 Generally, to get a quick view on the data, multiple image viewers are available and an overview is provided in [Image visualization](viewers.md)
+
+</div>
 
 [^fn1]: Giesen C. _et al._ (2014) Highly multiplexed imaging of tumor tissues with subcellular resolution by mass cytometry. Nat. Methods, 11, 417-422.  
 [^fn2]: Angelo M. _et al._ (2014) Multiplexed ion beam imaging of human breast tumors. Nat. Med., 20, 436-442.  
