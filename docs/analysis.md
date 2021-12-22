@@ -1,12 +1,12 @@
 # Downstream analysis of IMC data
 
-This page gives a brief overview of the common steps for downstream analysis of IMC data.
-For a more detailed workflow using example data, please refer to the [IMC data analysis](https://github.com/BodenmillerGroup/IMCDataAnalysis) repository (under development).
+This page gives a brief overview of the common steps for downstream analysis of IMC&trade; data.
+For a more detailed workflow using example data, please refer to the [IMC Data Analysis](https://github.com/BodenmillerGroup/IMCDataAnalysis) repository (under development).
 
 The analysis described here relies on the [Bioconductor](https://www.bioconductor.org/) framework for single-cell analysis. 
 The [Orchestrating Single-Cell Analysis with Bioconductor](https://bioconductor.org/books/release/OSCA/) book gives a good introduction into general single-cell analyses tasks.
 While the book mainly focuses on single-cell RNA sequencing data, most concepts (e.g. data handling, clustering and visualization) can be applied to single-cell data extracted from IMC.
-The book offers a [basic](https://bioconductor.org/books/3.14/OSCA.basic/) and [advanced](https://bioconductor.org/books/3.14/OSCA.advanced/) version.
+The book offers a [basic](https://bioconductor.org/books/3.14/OSCA.basic/) and an [advanced](https://bioconductor.org/books/3.14/OSCA.advanced/) version.
 
 ## Reading in the data
 
@@ -15,19 +15,19 @@ Single-cell data (mean intensities per cell and channel, morphological features 
 
 The structure of the read-in objects looks as follows:
 
-* mean intensity per cell and channel are stored in the __counts__ assay of the objects (cells in columns and channels in rows).
+* mean intensity per cell and channel are stored in the __counts__ assay of the objects (cells as columns, channels as rows).
 * cell-specific morphological features and image information are stored in the __colData__ slot of the objects
 * marker-specific information extracted from the panel file are stored in the __rowData__ slot of the objects
 * spatial object graphs are stored as edge lists in the __colPair__ slot of the objects
 
-In case of the `SingleCellExperiment` object, the cells' locations are stored in the `colData` slot and for the `SpatialExperiment` container the cells' locations are stored in the `spatialCoords` slot.
+In case of the `SingleCellExperiment` object, the cells' locations are stored in the `colData` slot. For the `SpatialExperiment` container, the cells' locations are stored in the `spatialCoords` slot.
 
 ## Spillover correction 
 
-Channel-to-channel spillover can occur between neighboring channels and leads to false signals, which need to be corrected for[^fn2].
+Channel-to-channel spillover can occur between neighboring channels and leads to false signals that need to be corrected[^fn2].
 Spillover correction is an **optional** step in IMC data analysis and requires a specific experimental setup:
 
-On an agarose slide, metal-tagged antibodies are spotted individually and for each antibody, an individual ROI is ablated. 
+On an agarose slide, metal-tagged antibodies are spotted individually, and an individual ROI is ablated for each antibody. 
 Data from individual ROIs can be read-in and processed using [imcRtools](https://github.com/BodenmillerGroup/imcRtools) as explained in the [spillover correction](https://bodenmillergroup.github.io/IMCDataAnalysis/spillover-correction.html) section of [IMC data analysis](https://github.com/BodenmillerGroup/IMCDataAnalysis) book. After obtaining a spillover matrix, single-cell data can be compensated using the [CATALYST](https://bioconductor.org/packages/release/bioc/vignettes/CATALYST/inst/doc/preprocessing.html#compensation) package.
 
 ## Quality control
@@ -35,9 +35,9 @@ Data from individual ROIs can be read-in and processed using [imcRtools](https:/
 Quality control (QC) is a crucial step to avoid technical artefacts in downstream analyses. 
 Broadly speaking, there are two levels of data quality control:
 
-1. **Pixel-level QC:** The first step after image acquisition and pre-processing is the visual assessment of image quality. For this, interactive tools such as [napari-imc](https://github.com/BodenmillerGroup/napari-imc), [histoCAT](https://github.com/BodenmillerGroup/histoCAT), [QuPath](https://qupath.github.io/), as well as [cytomapper](https://bioconductor.org/packages/release/bioc/html/cytomapper.html) (see below) can be used. Common considerations when viewing images for the first time are as follows: (i) Are the selected markers detected to be specifically expressed (high signal-to-noise ratio, cell type specificity, adequate maximum intensity per channel, etc.)? (ii) is channel-spillover visually detectable? (iii) Are staining differences detectable between acquisitions? 
+1. **Pixel-level QC:** The first step after image acquisition and pre-processing is the visual assessment of image quality. For this, interactive tools such as [napari-imc](https://github.com/BodenmillerGroup/napari-imc), [histoCAT](https://github.com/BodenmillerGroup/histoCAT), [QuPath](https://qupath.github.io/), and [cytomapper](https://bioconductor.org/packages/release/bioc/html/cytomapper.html) (see below) can be used. Common considerations when viewing images for the first time are as follows: (i) Are the selected markers detected to be specifically expressed (high signal-to-noise ratio, cell type specificity, adequate maximum intensity per channel, etc.)? (ii) is channel-spillover visually detectable? (iii) Are staining differences detectable between acquisitions? 
 
-2. **Cell-level QC:** After reading in the data (e.g. using `imcRtools`), cell-level QC includes (i) visualizing global staining differences between acquisition or batches (e.g. in form of ridge plots using [dittoSeq](https://www.bioconductor.org/packages//release/bioc/html/dittoSeq.html)); (ii) visualizing marker-to-marker correlations across all cells; (iii) visualizing low-dimensional representations of the data (see below); (iv) visualizing the cell density and cell size distribution per acquisition.
+2. **Cell-level QC:** After reading in the single-cell data (e.g. using `imcRtools`), cell-level QC includes (i) visualizing global staining differences between acquisition or batches (e.g. in form of ridge plots using [dittoSeq](https://www.bioconductor.org/packages//release/bioc/html/dittoSeq.html)); (ii) visualizing marker-to-marker correlations across all cells; (iii) visualizing low-dimensional representations of the data (see below); (iv) visualizing the cell density and cell size distribution per acquisition.
 
 ## Cell-type identification
 
@@ -45,11 +45,11 @@ One of the first analysis tasks includes cell phenotyping.
 This is commonly done by grouping cells based on marker expression and labelling these groups based on their biological role.
 Here, we list three of the major approaches to identify cell types after reading in the single-cell data.
 
-1. **Clustering-based:** The probably most common approach to identify cell types in an unbiased manner invloves clustering of single-cells based on their marker expression. For this, software packages have been developed that utilize graph-based clustering strategies (e.g. [Rphenograph](https://github.com/JinmiaoChenLab/Rphenograph), [scran](https://bioconductor.org/packages/release/bioc/vignettes/scran/inst/doc/scran.html#5_Graph-based_clustering)) or self-organising maps (the `flowSOM` implementation in the [CATALYST](https://bioconductor.org/packages/release/bioc/vignettes/CATALYST/inst/doc/differential.html#cluster-flowsom-clustering-consensusclusterplus-metaclustering) package). The [bluster](https://www.bioconductor.org/packages/release/bioc/html/bluster.html) package offers a wide variety of clustering strategies applicable to single-cell data. After clustering, the mean marker expression per group is commonly used to label clusters.
+1. **Unsupervised clustering-based:** The probably most common approach to identify cell types in an unbiased manner involves unsupervised clustering of single-cells based on their marker expression. For this, software packages have been developed that utilize graph-based clustering strategies (e.g. [Rphenograph](https://github.com/JinmiaoChenLab/Rphenograph), [scran](https://bioconductor.org/packages/release/bioc/vignettes/scran/inst/doc/scran.html#5_Graph-based_clustering)) or self-organising maps (the `flowSOM` implementation in the [CATALYST](https://bioconductor.org/packages/release/bioc/vignettes/CATALYST/inst/doc/differential.html#cluster-flowsom-clustering-consensusclusterplus-metaclustering) package). The [bluster](https://www.bioconductor.org/packages/release/bioc/html/bluster.html) package offers a wide variety of clustering strategies applicable to single-cell data. After clustering, the mean marker expression per group is commonly used to label clusters.
 
 2. **Gating and classiciation:** An alternative and more supervised approach to identify cell types from highly multiplexed images relies on manual gating (labelling) of cells and the consecutive classification of all unlabelled cells. The [cytomapper](https://www.bioconductor.org/packages/release/bioc/vignettes/cytomapper/inst/doc/cytomapper.html#12_Gating_cells_on_images) package offers the `cytomapperShiny` application to gate cells based on their marker expression with joint visualization of the selected cells on composite images. The ground truth labels are saved and can be used as training dataset for general machine learning approaches (e.g. using [caret](https://topepo.github.io/caret/index.html), [mlr](https://mlr.mlr-org.com/) or [tidymodels](https://www.tidymodels.org/)). We observed a high classification accuracy when applying random forrest-based classification. Additionally, a more specialised framework for classifying cells is the [SingleR](https://bioconductor.org/packages/release/bioc/html/SingleR.html) package. 
 
-3. **Classification based on prior knowledge:** A classification approach that does not rely on manually labelling cells was proposed in the [Garnett](https://cole-trapnell-lab.github.io/garnett/docs/) (implemented in R) and [Astir](https://astir.readthedocs.io/en/latest/index.html) (implemented in python) modelling frameworks. Here, the user defines which cell types express which markers and cell labelling is performed automatically. 
+3. **Classification based on prior knowledge:** A classification approach that does not rely on manual labelling of cells was proposed in the [Garnett](https://cole-trapnell-lab.github.io/garnett/docs/) (implemented in R) and [Astir](https://astir.readthedocs.io/en/latest/index.html) (implemented in Python) modelling frameworks. Here, the user defines which cell types express which markers and cell labelling is performed automatically. 
 
 ## Data visualization
 
@@ -58,25 +58,25 @@ Visualization for bioimaging data is commonly performed on the **pixel-** and **
 __Pixel level visualization__
 
 Interactive visualization can be performed using interactive, GUI-based tools as described in the [Image visualization](viewers.md) section. 
-As an alternative using the statistical programming language R, the [cytomapper](https://github.com/BodenmillerGroup/cytomapper) Bioconductor package supports handling and visualization of multi-channel images. 
+As an alternative, the [cytomapper](https://github.com/BodenmillerGroup/cytomapper) Bioconductor package supports handling and visualization of multi-channel images using the statistical programming language R. 
 
 The main visualization functionality of `cytomapper` is three-fold:
 
 _plotPixels_
 
-The function takes a `CytoImageList` object (available via the `cytomapper` package) containing multi-channel images representing pixel-level expression values and optionally a `CytoImageList` object containing segementation masks and a `SingleCellExperiment` object containing cell-level metadata.
+The function takes a `CytoImageList` object (available via the `cytomapper` package) containing multi-channel images representing pixel-level expression values, and - optionally - a `CytoImageList` object containing segementation masks and a `SingleCellExperiment` object containing cell-level metadata.
 
 It allows the visualization of pixel-level information of up to six channels and outlining cells based on cell-level metadata.
 
 _plotCells_
 
-This function takes a `CytoImageList` object containing segementation masks and a `SingleCellExperiment` object containing cell-level mean expression values and metadata information.
+This function takes a `CytoImageList` object containing segementation masks, and a `SingleCellExperiment` object containing cell-level mean expression values and metadata information.
 
 It allows the visualization of cell-level expression data and metadata information.
 
 _cytomapperShiny_
 
-This Shiny application allows gating of cells based on their expression values and visualises selected cells on their corresponding images. 
+This Shiny application allows gating of cells based on their expression values, and visualises selected cells on their corresponding images. 
 
 It requires at least a `SingleCellExperiment` as input and optionally `CytoImageList` objects containing segmentation masks and multi-channel images.
 
@@ -118,4 +118,3 @@ These can be used for data re-analysis and methods development and are provided 
 [^fn5]: Schulz D. _et al._ (2018) Simultaneous Multiplexed Imaging of mRNA and Proteins with Subcellular Resolution in Breast Cancer Tissue Samples by Mass Cytometry. Cell Systems
 [^fn6]: Schürch C. M. _et al._ (2021) Coordinated Cellular Neighborhoods Orchestrate Antitumoral Immunity at the Colorectal Cancer Invasive Front. Cell
 [^fn7]: Hoch T. _et al._ (2021) Multiplexed Imaging Mass Cytometry of Chemokine Milieus in Metastatic Melanoma Characterizes Features of Response to Immunotherapy. bioRxiv
-

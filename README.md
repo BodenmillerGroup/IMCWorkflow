@@ -1,6 +1,6 @@
 # IMC data analysis tools
 
-This repository contains an overview of available tools to use for imaging mass cytometry (IMC) data analysis.
+This repository contains an overview of available tools to use for imaging mass cytometry&trade; (IMC&trade;) data analysis.
 
 ## Image processing
 
@@ -10,7 +10,7 @@ manual image processing for IMC and other multiplexed imaging data.
 
 Building up on the `IMCSegmentationPipeline`, the [steinbock](https://github.com/BodenmillerGroup/steinbock) framework offers user-friendly processing of multi-channel images and supports different segmentation strategies.
 
-### IMC Segmentation pipeline
+### IMC Segmentation Pipeline
 
 The [ImcSegmentationPipeline](https://github.com/BodenmillerGroup/ImcSegmentationPipeline) uses the [imctools](https://github.com/BodenmillerGroup/imctools) python package to handle IMC data. Custom [CellProfiler plugins](https://github.com/BodenmillerGroup/ImcPluginsCP) support multi-channel image analysis within [CellProfiler](https://cellprofiler.org/). 
 In addition, [Ilastik](https://www.ilastik.org/) is needed to perform pixel classification. 
@@ -39,7 +39,7 @@ The [steinbock](https://github.com/BodenmillerGroup/steinbock) framework uses th
  
 ## Viewers for IMC data
 
-The raw IMC data files in `MCD` format can be read in and visualized using the [MCD viewer](https://www.fluidigm.com/software) (only supported on Windows).
+The raw IMC data files in Fluidigm&reg; MCD&trade; format can be read in and visualized using the [MCD viewer](https://www.fluidigm.com/software) (only supported on Windows).
 
 A [napari](https://napari.org/) plugin is now available to read in raw IMC data files and visualize them in a shared coordinate system:
 
