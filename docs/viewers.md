@@ -1,19 +1,19 @@
 # Viewing IMC data
 
-During [image processing](process.md), raw IMC&trade; data is converted into multi-channel TIFF or OME-TIFF files.
+During [image processing](process.md), raw IMC&trade; data files are converted into multi-channel `.tiff` or `.ome.tiff` files.
 These can be visualized using common image viewers, including [ImageJ/Fiji](https://imagej.net/software/fiji/) and [QuPath](https://qupath.github.io/).
-The visualization of raw IMC data requires specialized image viewers to visualize aquisitions, panoramas and/or segmented objects.
+Specialized image viewers are necessary to visualize acquisitions, panoramas and segmented objects.
 
 ## MCD viewer
 
 The [MCD viewer](https://www.fluidigm.com/products-services/software) distributed by Fluidigm&reg; for **Windows only** allows visualization of MCD&trade; files.
-The user can view individual acquisitions (also referred to as regions of interest; ROIs) and multiple channels. 
+The user can view individual acquisitions (also referred to as regions of interest) and multiple channels. 
 
 ## histoCAT 
 
 The [histoCAT](https://github.com/BodenmillerGroup/histoCAT)[^fn1] software offers interactive visualization of IMC data.
-It requires pre-processing of IMC raw data using the IMC Segmentation Pipeline (see [image processing](process)) to generate single-channel TIFF files.
-By supplying segmentation masks, `histoCAT` can extract object-specific features and supports clustering, dimensionality reduction and interaction testing.
+It requires pre-processing of raw IMC data using the IMC Segmentation Pipeline (see [image processing](process)) to generate single-channel `.tiff` files.
+When supplied segmentation masks, `histoCAT` can extract object-specific features and supports clustering, dimensionality reduction and interaction testing.
 
 !!! note ""
 
@@ -22,7 +22,7 @@ By supplying segmentation masks, `histoCAT` can extract object-specific features
 ## histoCAT-web
 
 A browser-based implementation of `histoCAT` is provided by [histoCAT-web](https://github.com/BodenmillerGroup/histocat-web). 
-Once deployed, `histoCAT-web` supports reading in IMC raw data and offers an extended set of `histoCAT` functionality.
+Once deployed, `histoCAT-web` reads raw IMC data files and offers an extended set of `histoCAT` functionalities.
 
 !!! note ""
 
