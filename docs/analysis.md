@@ -4,7 +4,7 @@ This page gives a brief overview of the common steps for downstream analysis of 
 For a more detailed workflow using example data, please refer to the [IMC Data Analysis](https://github.com/BodenmillerGroup/IMCDataAnalysis) repository (under development).
 
 The analysis described here relies on the [Bioconductor](https://www.bioconductor.org/) framework for single-cell analysis. 
-The book [Orchestrating Single-Cell Analysis with Bioconductor](https://bioconductor.org/books/release/OSCA/) provides a good introduction into general single-cell analyses tasks.
+The book [Orchestrating Single-Cell Analysis with Bioconductor](https://bioconductor.org/books/release/OSCA/) provides a good introduction into general single-cell analysis tasks.
 Although the book mainly focuses on single-cell RNA sequencing data analysis, most concepts (e.g., data handling, clustering, and visualization) can be applied to single-cell IMC data.
 The book is offered in [basic](https://bioconductor.org/books/3.14/OSCA.basic/) and [advanced](https://bioconductor.org/books/3.14/OSCA.advanced/) versions.
 
@@ -64,7 +64,7 @@ The main visualization functionalities of `cytomapper` are three-fold:
 
 _plotPixels_
 
-The function takes a `CytoImageList` object (available via the `cytomapper` package) containing multi-channel images representing pixel-level expression values, and - optionally - a `CytoImageList` object containing segementation masks and a `SingleCellExperiment` object containing cell-level metadata.
+The function takes a `CytoImageList` object (available via the `cytomapper` package) containing multi-channel images representing pixel-level expression values, and _optionally_ a `CytoImageList` object containing segmentation masks and a `SingleCellExperiment` object containing cell-level metadata.
 
 It allows the visualization of pixel-level information of up to six channels and outlining of cells based on cell-level metadata.
 

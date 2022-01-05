@@ -42,7 +42,7 @@ If random forest-based image segmentation is performed (see next section), rando
 
 The IMC Segmentation Pipeline supports random forest-based image segmentation, whereas `steinbock` supports random forest-based and deep learning-based segmentation. 
 
-**Random forest-based** image segmentation is performed by training a pixel classifier using [Ilastik](https://www.ilastik.org/) on the randomly extracted image crops and selected image channels.
+**Random forest-based** image segmentation is performed by training a pixel classifier using [ilastik](https://www.ilastik.org/) on the randomly extracted image crops and selected image channels.
 Pixels are classified as nuclear, cytoplasmic, or background. Employing a customizable [CellProfiler](https://cellprofiler.org/) pipeline, the probabilities are then thresholded to segment nuclei, and nuclei are expanded into cytoplasmic regions to obtain cell masks.
 
 **Deep learning-based** image segmentation is performed as presented by Greenwald _et al._[^fn1]. 
