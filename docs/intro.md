@@ -9,7 +9,7 @@ IMC can be used to perform highly multiplexed imaging and is particularly suited
 ## What it is
 
 IMC was first described by the Bodenmiller laboratory in 2014[^fn1].
-Since then it has been commercialised by Fluidigm<sup>&reg</sup>; and is now distributed as the Hyperion&trade; imaging system (documentation is available [here](https://www.fluidigm.com/products-services/instruments/hyperion)).
+Since then it has been commercialised by Fluidigm<sup>&reg;</sup> and is now distributed as the Hyperion&trade; imaging system (documentation is available [here](https://www.fluidigm.com/products-services/instruments/hyperion)).
 IMC captures the spatial expression of multiple proteins and mRNA molecules in parallel.
 With a nominal 1 &mu;m resolution, IMC is able to detect cytoplasmic and nuclear localisation of proteins. 
 The current ablation frequency of IMC is 200Hz, meaning that a 1 mm<sup>2</sup> area can be imaged within about 2 hours.
