@@ -1,0 +1,10 @@
+name: Question
+description: Ask a question regarding IMC data analysis
+title: "Question: "
+labels: ["question"]
+assignees:
+  - nilseling
+body:
+  - type: markdown
+    attributes:
+      value: Please give this issue a meaningful title so that other user can easily find related questions. 
