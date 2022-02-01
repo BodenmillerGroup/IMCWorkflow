@@ -1,0 +1,557 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.9">
+    
+    
+      
+        <title>Image processing - Primer to IMC analysis</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.2b4465f4.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.e6a45f82.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#009485">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="css/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#imc-image-processing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Primer to IMC analysis" class="md-header__button md-logo" aria-label="Primer to IMC analysis" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Primer to IMC analysis
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Image processing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/BodenmillerGroup/IMCWorkflow/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    BodenmillerGroup/IMCWorkflow
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Primer to IMC analysis" class="md-nav__button md-logo" aria-label="Primer to IMC analysis" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Primer to IMC analysis
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/BodenmillerGroup/IMCWorkflow/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    BodenmillerGroup/IMCWorkflow
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="intro.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Image processing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="process.html" class="md-nav__link md-nav__link--active">
+        Image processing
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mcd-file-type" class="md-nav__link">
+    MCD file type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#image-pre-processing" class="md-nav__link">
+    Image pre-processing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#image-segmentation" class="md-nav__link">
+    Image segmentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-extraction" class="md-nav__link">
+    Feature extraction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-export" class="md-nav__link">
+    Data export
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="viewers.html" class="md-nav__link">
+        Image visualization
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="analysis.html" class="md-nav__link">
+        Downstream analysis
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mcd-file-type" class="md-nav__link">
+    MCD file type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#image-pre-processing" class="md-nav__link">
+    Image pre-processing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#image-segmentation" class="md-nav__link">
+    Image segmentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-extraction" class="md-nav__link">
+    Feature extraction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-export" class="md-nav__link">
+    Data export
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/BodenmillerGroup/IMCWorkflow/edit/master/docs/process.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="imc-image-processing">IMC image processing</h1>
+<p>The following sections describe the processing of raw IMC&trade; data, including file type conversion, image segmentation, feature extraction, and data export.
+More detailed information can be found in the individual repositories:</p>
+<p><a href="https://github.com/BodenmillerGroup/ImcSegmentationPipeline">IMC Segmentation Pipeline</a>: Raw IMC data pre-processing is performed using the 
+<a href="https://github.com/BodenmillerGroup/imctools">imctools</a> Python package to convert raw <code>.mcd</code> files into <code>.ome.tiff</code> and <code>.tiff</code> files.
+After image cropping, an <a href="https://www.ilastik.org/">ilastik</a> pixel classifier is trained for image classification prior to image segmentation 
+using <a href="https://cellprofiler.org/">CellProfiler</a>. Features (e.g. mean pixel intensity) of segmented objects (e.g. cells) are quantified and
+exported. </p>
+<div class="admonition note">
+<p>Read more in the <a href="https://github.com/BodenmillerGroup/ImcSegmentationPipeline/blob/main/scripts/imc_preprocessing.ipynb">Docs</a></p>
+</div>
+<p><a href="https://github.com/BodenmillerGroup/steinbock">steinbock</a>: The <code>steinbock</code> framework offers tools for multi-channel image processing using the command-line or Python code. 
+Supported tasks include IMC data preprocessing, supervised multi-channel image segmentation, object quantification and data export to a variety of file formats. 
+The <code>steinbock</code> framework supports functionality similar to those of the IMC Segmentation Pipeline and further allows deep learning-enabled image segmentation. 
+The framework is available as platform-independent Docker container, ensuring reproducibility and user-friendly installation. </p>
+<div class="admonition note">
+<p>Read more in the <a href="https://bodenmillergroup.github.io/steinbock/latest/">Docs</a> and the <a href="https://www.biorxiv.org/content/10.1101/2021.11.12.468357v1">paper</a>.</p>
+</div>
+<h2 id="mcd-file-type">MCD file type</h2>
+<p>IMC raw data are saved in the proprietary MCD&trade; file type.
+A single <code>.mcd</code> file can hold raw acquisition data for multiple regions of interest, optical images providing a slide-level overview of the sample ("panoramas"), and detailed metadata about the experiment. 
+The <code>.mcd</code> files can be read by the MCD viewer (see <a href="viewers.html">Image visualization</a>) but cannot be widely read by image analysis software. </p>
+<p>To facilitate IMC data pre-processing, the <a href="https://github.com/BodenmillerGroup/readimc">readimc</a> and <a href="https://github.com/BodenmillerGroup/imctools">imctools</a> Python packages allow extraction of the multi-modal (IMC acquisitions, panoramas), multi-region, multi-channel information contained in raw IMC images.
+Whereas <code>imctools</code> contains functionality specific to the IMC Segmentation Pipeline, the <code>readimc</code> package contains reader functions for IMC raw data and should be used for this purpose.
+A common first step of IMC pre-processing is the conversion of raw data from <code>.mcd</code> files to multi-channel <code>.tiff</code> files. </p>
+<h2 id="image-pre-processing">Image pre-processing</h2>
+<p>Starting from IMC raw data and a "panel" file, individual acquisitions are extracted as <code>.tiff</code> and <code>.ome.tiff</code> files. 
+The panel file contains information on antibodies used in the experiment, and the user can specify which channels to keep for downstream analysis.
+If random forest-based image segmentation is performed (see next section), random tiles are cropped from images for convenience of pixel labeling.</p>
+<h2 id="image-segmentation">Image segmentation</h2>
+<p>The IMC Segmentation Pipeline supports random forest-based image segmentation, whereas <code>steinbock</code> supports random forest-based and deep learning-based segmentation. </p>
+<p><strong>Random forest-based</strong> image segmentation is performed by training a pixel classifier using <a href="https://www.ilastik.org/">ilastik</a> on the randomly extracted image crops and selected image channels.
+Pixels are classified as nuclear, cytoplasmic, or background. Employing a customizable <a href="https://cellprofiler.org/">CellProfiler</a> pipeline, the probabilities are then thresholded to segment nuclei, and nuclei are expanded into cytoplasmic regions to obtain cell masks.</p>
+<p><strong>Deep learning-based</strong> image segmentation is performed as presented by Greenwald <em>et al.</em><sup id="fnref:fn1"><a class="footnote-ref" href="#fn:fn1">1</a></sup>. 
+Briefly, <code>steinbock</code> first aggregates user-defined image channels to generate two-channel images representing nuclear and cytoplasmic signals. 
+Next, the <a href="https://github.com/vanvalenlab/intro-to-deepcell">DeepCell</a> Python package is used to run <code>Mesmer</code>, a deep learning-enabled segmentation algorithm pre-trained on <code>TissueNet</code>, to automatically obtain cell masks without any further user input.</p>
+<p>Segmentation masks are single-channel images that match the input images in size. In these images, non-zero grayscale values indicate the IDs of segmented objects (e.g., cells).
+These masks are written out as <code>.tiff</code> files after segmentation.</p>
+<h2 id="feature-extraction">Feature extraction</h2>
+<p>Either the IMC Segmentation Pipeline or <code>steinbock</code> can be used to extract object-specific features from the segmentation masks together with the multi-channel images.
+The object-specific features include the mean pixel intensity per object and channel, morphological features (e.g., object area) and the object locations.
+Object-specific features are output as <code>.csv</code> files, where rows represent individual objects and columns represent features.</p>
+<p>Both the IMC Segmentation Pipeline and <code>steinbock</code> can be used to compute <em>spatial object graphs</em>, in which nodes correspond to objects, and nodes in spatial proximity are connected by an edge.
+These graphs serve as proxies for interactions between neighboring cells. They are stored as edge lists in form of <code>.csv</code> files.</p>
+<p>Both the IMC Segmentation Pipeline and <code>steinbock</code> also write out image-specific metadata (e.g., width and height) as <code>.csv</code> files.</p>
+<h2 id="data-export">Data export</h2>
+<p>To facilitate compatibility with downstream analysis, <code>steinbock</code> exports data to a variety of file formats such as OME-TIFF for images, FCS for single-cell data, the <em>anndata</em><sup id="fnref:fn2"><a class="footnote-ref" href="#fn:fn2">2</a></sup> format for data analysis in Python, and various graph file formats for network analysis using software such as <a href="https://cytoscape.org/">CytoScape</a><sup id="fnref:fn3"><a class="footnote-ref" href="#fn:fn3">3</a></sup>. For export to OME-TIFF, steinbock uses <a href="https://github.com/BodenmillerGroup/xtiff">xtiff</a>, a Python package developed for writing multi-channel <code>.tiff</code> stacks.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:fn1">
+<p>Greenwald N. <em>et al.</em> (2021) Whole-cell segmentation of tissue images with human-level performance using large-scale data annotation and deep learning. Nature Biotechnology&#160;<a class="footnote-backref" href="#fnref:fn1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:fn2">
+<p>Wolf A. F. <em>et al.</em> (2018) SCANPY: large-scale single-cell gene expression data analysis. Genome Biology&#160;<a class="footnote-backref" href="#fnref:fn2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:fn3">
+<p>Shannon P. <em>et al.</em> (2003) Cytoscape: A Software Environment for Integrated Models of Biomolecular Interaction Networks. Genome Research&#160;<a class="footnote-backref" href="#fnref:fn3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="intro.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Introduction" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Introduction
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="viewers.html" class="md-footer__link md-footer__link--next" aria-label="Next: Image visualization" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Image visualization
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.22074ed6.min.js"}</script>
+    
+    
+      <script src="assets/javascripts/bundle.960e086b.min.js"></script>
+      
+    
+  </body>
+</html>
